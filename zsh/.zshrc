@@ -51,7 +51,7 @@ source ~/dotfiles/zsh/.zsh_aliases
 source ~/.zsh/devpod-fzf/devpod-fzf.zsh
 
 # Source custom tmux.conf
-tmux source -v ~/dotfiles/.tmux.conf #1> /dev/null
+tmux source -v ~/dotfiles/.tmux.conf 1> /dev/null
 
 # Is there a way to force installation of packages if they are not already installed?
 # Should I add any plugins above?
