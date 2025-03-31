@@ -1,0 +1,39 @@
+# Set default editors to Vim
+export EDITOR=vim
+export VISUAL="$EDITOR"
+
+
+## Java and Android
+export JAVA_HOME="$(/usr/libexec/java_home -v11)"
+export ANDROID_HOME=~/android-sdk
+export ANDROID_NDK=~/android-ndk
+export ANDROID_NDK_HOME=~/android-ndk
+# Add env vars to PATH
+export PATH=$JAVA_HOME/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/cmdline-tools/latest:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+
+
+## Bat (https://github.com/sharkdp/bat)
+export BAT_CONFIG_PATH="~/dotfiles/config/bat.conf"
+
+
+## Fzf (The following setup is from https://github.com/junegunn/fzf)
+# Setting fd as the default source for fzf; add `--hidden`` so that hidden files are included below
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --follow --exclude .git'
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+  --bind="ctrl-o:execute(code {})+abort"'
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="
+  --height=80%
+  --style full
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --style full
+  --multi
+  --height=60%
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy the command into the clipboard'"
