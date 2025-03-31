@@ -1,5 +1,4 @@
 # Ryan's dotfiles
-My dotfiles using Zinit.
 
 ## install
 ```sh
@@ -8,6 +7,12 @@ cd ~/.dotfiles
 ```
 
 # ToDos
+- Further customize tmux.conf
+- Figure out why bat.conf doesn't work
+- Setup plugins and additional power tools
+- Enable automatic updating and setup
+- Add features for automatically installing packages
+- Add devpod.yaml file
 
 # Other repos to look at
 - https://github.com/tyvsmith/dotfiles
