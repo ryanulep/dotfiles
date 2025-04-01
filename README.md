@@ -1,21 +1,34 @@
 # Ryan's dotfiles
 
-## install
+## Install
+
+For the initial install:
+
 ```sh
-git clone https://github.com/ryanulep/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+bash -c "$(wget -qO- https://raw.github.com/ryanulep/dotfiles/main/bin/dotfiles)" && source ~/.zshrc
+```
+
+or
+
+```sh
+git clone https://github.com/ryanulep/dotfiles.git ~/dotfiles --recursive
+~/dotfiles/bin/dotfiles
+source ~/.zshrc
+```
+
+To update the dotfiles:
+```sh
+dotfiles
 ```
 
 # ToDos
 - Further customize tmux.conf
-- Figure out why bat.conf doesn't work
 - Setup plugins and additional power tools
-- Enable automatic updating and setup
 - Add features for automatically installing packages
-- Add devpod.yaml file
 
-# Other repos to look at
+# Other Dotfiles repots to look at:
 - https://github.com/tyvsmith/dotfiles
+- https://github.com/jbarr21/dotfiles
 - https://github.com/holman/dotfiles
 - https://github.com/thoughtbot/dotfiles
 - https://github.com/mathiasbynens/dotfiles
