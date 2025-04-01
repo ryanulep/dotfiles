@@ -27,12 +27,10 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 
-if [[ ! -z "$DEVPOD_NAME" ]]; then
-    # install latest version on devpod
-    if [[ ! -f "$HOME/.fzf.zsh" ]]; then
-        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-        echo "y y n " | tr ' ' '\n' | ~/.fzf/install
-    fi
+# Install latest Fzf if not already installed
+if [[ ! -f "$HOME/.fzf.zsh" ]]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    echo "y y n " | tr ' ' '\n' | ~/.fzf/install
     export FZF_PATH="$HOME/.fzf"
     export PATH="$HOME/.fzf/bin:$PATH"
     source "$HOME/.fzf.zsh"
