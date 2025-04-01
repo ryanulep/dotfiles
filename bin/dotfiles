@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 [[ "$1" == "source" ]] || \
 
-echo 'Dotfiles - "Cowboy" Ben Alman - http://benalman.com/'
+echo 'Dotfiles - ryanulep'
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 
 Usage: $(basename "$0")
 
 See the README for documentation.
-https://github.com/cowboy/dotfiles
-
-Copyright (c) 2014 "Cowboy" Ben Alman
-Licensed under the MIT license.
-http://benalman.com/about/license/
+https://github.com/ryanulep/dotfiles
 HELP
 exit; fi
 
@@ -21,7 +17,7 @@ exit; fi
 ###########################################
 
 # Where the magic happens.
-export DOTFILES=~/.dotfiles
+export DOTFILES=~/dotfiles
 
 # Logging stuff.
 function e_header()   { echo -e "\n\033[1m$@\033[0m"; }
@@ -64,7 +60,7 @@ function is_osx() {
   [[ "$OSTYPE" =~ ^darwin ]] || return 1
 }
 function is_ubuntu() {
-  [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]] || return 1
+  [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]] || [[ "$(cat /etc/issue 2> /dev/null)" =~ Debian ]] || return 1
 }
 function is_ubuntu_desktop() {
   dpkg -l ubuntu-desktop >/dev/null 2>&1 || return 1
@@ -288,7 +284,8 @@ function init_files() {
     for opt in "${menu_options[@]}"; do
       remove=
       for os in "${oses[@]}"; do
-        [[ "$opt" =~ (^|[^a-z])$os($|[^a-z]) ]] && remove=1 && break
+        # [[ "$opt" =~ (^|[^a-z])$os($|[^a-z]) ]] && remove=1 && break
+        remove=1 && break
       done
       [[ "$remove" ]] || menu_selects=("${menu_selects[@]}" "$opt")
     done
@@ -339,6 +336,7 @@ function config_test() {
   [[ "$1" -ef "$2" ]] && echo "same file"
 }
 function config_do() {
+  [[ ! -d ~/.config ]] && mkdir "$HOME/.config" || true
   e_success "Linking ~/.config/$1."
   ln -sf ../${2#$HOME/} ~/.config/
 }
@@ -398,11 +396,11 @@ while true; do sudo -n true; sleep 10; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Install a custom sudoers file that allows "sudo apt-get" to be executed
 # without asking for a password.
-sudoers_file=/etc/sudoers.d/cowboy-dotfiles
+sudoers_file=/etc/sudoers.d/ryanulep-dotfiles
 # Contents of the sudoers file.
 function sudoers_text() {
   cat <<EOF
-# This file was created by cowboy's dotfiles script on $(date -I)
+# This file was created by ryanulep's dotfiles script on $(date -I)
 # (which will never update it, only recreate it if it's missing)
 # Sudoers reference: http://ubuntuforums.org/showthread.php?t=1132821
 
@@ -472,8 +470,13 @@ fi
 if [[ ! -d $DOTFILES ]]; then
   # Dotfiles directory doesn't exist? Clone it!
   e_header "Downloading dotfiles"
-  git clone --branch ${DOTFILES_GH_BRANCH:-master} --recursive \
-    git://github.com/${DOTFILES_GH_USER:-cowboy}/dotfiles.git $DOTFILES
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -T git@github.com > /dev/null 2>&1
+  if [[ $? -le 1 ]]; then
+    git clone --branch main --recursive git://github.com/ryanulep/dotfiles.git $DOTFILES
+  else
+    # Fallback to HTTPS if SSH is not correctly configured
+    git clone --branch main --recursive https://github.com/ryanulep/dotfiles.git $DOTFILES
+  fi
   cd $DOTFILES
 elif [[ "$1" != "restart" ]]; then
   # Make sure we have the latest files.
