@@ -49,8 +49,8 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# Setup Fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# # Setup Fzf
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Is there a way to force installation of packages if they are not already installed?
 # Should I add any plugins above?
