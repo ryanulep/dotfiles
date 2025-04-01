@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 export DOTFILES="$HOME/dotfiles"
 
-export ZSH="$HOME/.oh-my-zsh"
-
 # Source all files in "source"
 function src() {
   local file
@@ -21,7 +19,7 @@ function dotfiles() {
   $DOTFILES/bin/dotfiles "$@" && src
 }
 
-src
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load.
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
