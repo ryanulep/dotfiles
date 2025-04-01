@@ -29,11 +29,6 @@ To update the dotfiles:
 dotfiles
 ```
 
-# ToDos
-- Further customize tmux.conf
-- Setup plugins and additional power tools
-- Add features for automatically installing packages
-
 # Other Dotfiles repots to look at:
 - https://github.com/tyvsmith/dotfiles
 - https://github.com/jbarr21/dotfiles
