@@ -1,0 +1,64 @@
+source "${HOME}/.zgenom/zgenom.zsh"
+
+if ! zgenom saved; then
+  zgenom ohmyzsh
+
+  # completions
+  zgenom ohmyzsh plugins/bazel
+  zgenom ohmyzsh plugins/httpie
+  zgenom load zsh-users/zsh-completions
+  zgenom load jandamm/zgenom-ext-eval
+  zgenom load jandamm/zgenom-ext-release
+  zgenom load jandamm/zgenom-ext-run
+  zgenom load qoomon/zsh-lazyload
+
+  # plugins
+  zgenom ohmyzsh plugins/colored-man-pages
+  zgenom ohmyzsh plugins/extract
+  zgenom ohmyzsh plugins/gh
+  zgenom ohmyzsh plugins/git
+  zgenom load unixorn/fzf-zsh-plugin
+  zgenom ohmyzsh plugins/fzf
+  zgenom ohmyzsh plugins/rsync
+  zgenom ohmyzsh plugins/web-search
+  zgenom ohmyzsh plugins/zoxide
+
+  [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/macos
+  [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/vscode
+
+  zgenom load aloxaf/fzf-tab
+
+  zgenom load zsh-users/zsh-autosuggestions
+  zgenom load zsh-users/zsh-syntax-highlighting
+
+  # add binaries
+  zgenom bin tj/git-extras
+
+  # core apps
+  test -d "$HOME/bin" && mkdir -p "$HOME/bin" || true
+  command -v eget > /dev/null 2>&1 || (bash "$HOME/dotfiles/scripts/eget.sh" && mv $HOME/eget $HOME/bin/)
+
+  command -v starship > /dev/null 2>&1 || eget starship/starship
+  command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
+  command -v atuin > /dev/null 2>&1 || eget atuinsh/atuin
+
+  lazyload sdk -- 'export SDKMAN_DIR="$HOME/.sdkman" && source "$HOME/.sdkman/bin/sdkman-init.sh"'
+  lazyload nvm npm node -- 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
+
+  zgenom eval --name zoxide <<(zoxide init zsh)
+  zgenom eval --name atuin <<(atuin init zsh --disable-ctrl-r --disable-up-arrow)
+
+  # theme
+  [[ "$JBARR21_USE_STARSHIP" -eq 1 ]] && command -v starship > /dev/null 2>&1 && zgenom eval --name starship <<(starship init zsh)
+  [[ "$JBARR21_USE_P10K" -eq 1 ]] && zgenom load romkatv/powerlevel10k powerlevel10k
+
+  # save all to init script
+  zgenom save
+
+  # Compile your zsh files
+  zgenom compile "$HOME/.zshrc"
+
+  # You can perform other "time consuming" maintenance tasks here as well.
+  # If you use `zgenom autoupdate` you're making sure it gets
+  # executed every 7 days.
+fi

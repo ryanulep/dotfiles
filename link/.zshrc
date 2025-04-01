@@ -1,22 +1,33 @@
-# Path to your Oh My Zsh installation.
+#!/usr/bin/env bash
+export DOTFILES="$HOME/dotfiles"
+
 export ZSH="$HOME/.oh-my-zsh"
 
-# TODO: Add an export for the dotfiles directory
+# Source all files in "source"
+function src() {
+  local file
+  if [[ "$1" ]]; then
+    source "$DOTFILES/source/$1.sh"
+  else
+    for file in $DOTFILES/source/*; do
+      source "$file"
+    done
+    [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local || true
+  fi
+}
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
+# Run dotfiles script, then source.
+function dotfiles() {
+  $DOTFILES/bin/dotfiles "$@" && src
+}
+
+src
+
+# Set name of the theme to load.
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
 zstyle ':omz:update' mode auto      # update automatically without asking
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -43,19 +54,6 @@ source $ZSH/oh-my-zsh.sh
 # Setup Fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Setup environment variables
-source ~/dotfiles/zsh/.zsh_variables
-
-# Source the aliases
-source ~/dotfiles/zsh/.zsh_aliases
-
-# devpod-fzf
-source ~/.zsh/devpod-fzf/devpod-fzf.zsh
-
-# Source custom tmux.conf
-tmux source -v ~/dotfiles/.tmux.conf 1> /dev/null
-
 # Is there a way to force installation of packages if they are not already installed?
 # Should I add any plugins above?
 # How do I customize colors and terminal prompt?
-# Why is bat.conf not getting picked up?

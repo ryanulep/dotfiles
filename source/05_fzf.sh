@@ -1,22 +1,5 @@
-# Set default editors to Vim
-export EDITOR=vim
-export VISUAL="$EDITOR"
-
-
-## Java and Android
-export JAVA_HOME="$(/usr/libexec/java_home -v11)"
-export ANDROID_HOME=~/android-sdk
-export ANDROID_NDK=~/android-ndk
-export ANDROID_NDK_HOME=~/android-ndk
-# Add env vars to PATH
-export PATH=$JAVA_HOME/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/cmdline-tools/latest:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
-
-
-## Bat (https://github.com/sharkdp/bat)
-export BAT_CONFIG_PATH="~/dotfiles/config/bat.conf"
-
-
 ## Fzf (The following setup is from https://github.com/junegunn/fzf)
+export FZF_DEFAULT_OPTS=""
 # Setting fd as the default source for fzf; add `--hidden`` so that hidden files are included below
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --follow --exclude .git'
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
@@ -37,3 +20,20 @@ export FZF_CTRL_R_OPTS="
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --color header:italic
   --header 'Press CTRL-Y to copy the command into the clipboard'"
+
+# fzf-tab
+zstyle ":completion:*:git-checkout:*" sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+
+if [[ ! -z "$DEVPOD_NAME" ]]; then
+    # install latest version on devpod
+    if [[ ! -f "$HOME/.fzf.zsh" ]]; then
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+        echo "y y n " | tr ' ' '\n' | ~/.fzf/install
+    fi
+    export FZF_PATH="$HOME/.fzf"
+    export PATH="$HOME/.fzf/bin:$PATH"
+    source "$HOME/.fzf.zsh"
+fi
