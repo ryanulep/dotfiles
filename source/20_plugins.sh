@@ -3,33 +3,48 @@ source "${HOME}/.zgenom/zgenom.zsh"
 if ! zgenom saved; then
   zgenom ohmyzsh
 
-  # completions
+  # Completions
+  zgenom load unixorn/fzf-zsh-plugin
+  zgenom ohmyzsh plugins/fzf
+  zgenom ohmyzsh plugins/command-not-found  # Provide suggested packages to be installed if a command cannot be found
   zgenom ohmyzsh plugins/bazel
-  zgenom ohmyzsh plugins/httpie
+  zgenom load zsh-users/zsh-autosuggestions
   zgenom load zsh-users/zsh-completions
+  zgenom ohmyzsh plugins/docker  # auto-completion and aliases for docker.
+
+  # Git plugins
+  zgenom ohmyzsh plugins/gh
+  zgenom ohmyzsh plugins/git
+  zgenom ohmyzsh plugins/github
+
+  # System enhancements
+  zgenom ohmyzsh plugins/iterm2
+  zgenom ohmyzsh plugins/tmux
+  zgenom ohmyzsh plugins/extract  # Extract compressed files
+  zgenom ohmyzsh plugins/aliases  # Lists shortcuts available based on installed plugins
+  zgenom ohmyzsh plugins/alias-finder  # Searches defined aliases and outputs any that match the command inputted
+  zgenom ohmyzsh plugins/colorize  # Provides syntax highlighting for files
+  zgenom load zsh-users/zsh-syntax-highlighting  # Provides CLI syntax highlighting
+  zgenom ohmyzsh plugins/zoxide  # Smarter cd command
+  zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
+
+  # Random Extras
+  zgenom ohmyzsh plugins/jira  # CLI for Atlassian's JIRA
+  zgenom ohmyzsh plugins/jsontools  # Handling JSON data
+  zgenom ohmyzsh plugins/colored-man-pages  # Colored man pages
+  zgenom ohmyzsh plugins/copyfile
+  zgenom ohmyzsh plugins/copypath
+  zgenom ohmyzsh plugins/sudo  # Prefix commands with sudo by pressing Esc twice
+
   zgenom load jandamm/zgenom-ext-eval
   zgenom load jandamm/zgenom-ext-release
   zgenom load jandamm/zgenom-ext-run
   zgenom load qoomon/zsh-lazyload
 
-  # plugins
-  zgenom ohmyzsh plugins/colored-man-pages
-  zgenom ohmyzsh plugins/extract
-  zgenom ohmyzsh plugins/gh
-  zgenom ohmyzsh plugins/git
-  zgenom load unixorn/fzf-zsh-plugin
-  zgenom ohmyzsh plugins/fzf
-  zgenom ohmyzsh plugins/rsync
-  zgenom ohmyzsh plugins/web-search
-  zgenom ohmyzsh plugins/zoxide
-
   [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/macos
   [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/vscode
 
   zgenom load aloxaf/fzf-tab
-
-  zgenom load zsh-users/zsh-autosuggestions
-  zgenom load zsh-users/zsh-syntax-highlighting
 
   # add binaries
   zgenom bin tj/git-extras
