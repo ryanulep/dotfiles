@@ -13,7 +13,7 @@ alias buck="./buckw"
 alias lint='./lintw'
 
 # Fzf
-alias fzf="fzf --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
+alias fzf="fzf --style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
 
 # Include custom aliases
 if [[ -f ~/.aliases.local ]]; then
