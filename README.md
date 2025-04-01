@@ -4,11 +4,19 @@
 
 For the initial install:
 
+#### Ubuntu
+
 ```sh
 bash -c "$(wget -qO- https://raw.github.com/ryanulep/dotfiles/main/bin/dotfiles)" && source ~/.zshrc
 ```
 
-or
+#### macOS
+
+```sh
+bash -c "$(curl -fsSL https://raw.github.com/ryanulep/dotfiles/main/bin/dotfiles)" && source ~/.zshrc
+```
+
+#### or
 
 ```sh
 git clone https://github.com/ryanulep/dotfiles.git ~/dotfiles --recursive
