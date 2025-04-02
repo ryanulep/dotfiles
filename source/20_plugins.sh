@@ -53,7 +53,7 @@ if ! zgenom saved; then
   test -d "$HOME/bin" && mkdir -p "$HOME/bin" || true
   command -v eget > /dev/null 2>&1 || (bash "$HOME/dotfiles/scripts/eget.sh" && mv $HOME/eget $HOME/bin/)
 
-  command -v starship > /dev/null 2>&1 || eget starship/starship
+  # command -v starship > /dev/null 2>&1 || eget starship/starship
   command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
   command -v atuin > /dev/null 2>&1 || eget atuinsh/atuin
 
