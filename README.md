@@ -29,6 +29,12 @@ To update the dotfiles:
 dotfiles
 ```
 
+## If files have already been previously downloaded:
+
+```sh
+cd ~/dotfiles && dotfiles
+```
+
 # Other Dotfiles repots to look at:
 - https://github.com/tyvsmith/dotfiles
 - https://github.com/jbarr21/dotfiles
