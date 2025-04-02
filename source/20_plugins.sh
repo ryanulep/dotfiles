@@ -29,12 +29,10 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
 
   # Random Extras
-  zgenom ohmyzsh plugins/jira  # CLI for Atlassian's JIRA
   zgenom ohmyzsh plugins/jsontools  # Handling JSON data
   zgenom ohmyzsh plugins/colored-man-pages  # Colored man pages
   zgenom ohmyzsh plugins/copyfile
   zgenom ohmyzsh plugins/copypath
-  zgenom ohmyzsh plugins/sudo  # Prefix commands with sudo by pressing Esc twice
 
   zgenom load jandamm/zgenom-ext-eval
   zgenom load jandamm/zgenom-ext-release
