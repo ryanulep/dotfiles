@@ -63,10 +63,6 @@ if ! zgenom saved; then
   zgenom eval --name zoxide <<(zoxide init zsh)
   zgenom eval --name atuin <<(atuin init zsh --disable-ctrl-r --disable-up-arrow)
 
-  # theme
-  [[ "$JBARR21_USE_STARSHIP" -eq 1 ]] && command -v starship > /dev/null 2>&1 && zgenom eval --name starship <<(starship init zsh)
-  [[ "$JBARR21_USE_P10K" -eq 1 ]] && zgenom load romkatv/powerlevel10k powerlevel10k
-
   # save all to init script
   zgenom save
 
