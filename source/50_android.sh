@@ -17,14 +17,12 @@ if [ -z "$DEVPOD_NAME" ]; then
   export PATH=$JAVA_HOME/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:~/.local/bin:$ANDROID_HOME/platform-tools:$PATH
 fi
 
-# mount the android file image
+# Mount the Android file image
 function mountAndroid { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }
 
-# unmount the android file image
+# Unmount the Android file image
 function umountAndroid() { hdiutil detach /Volumes/android; }
 
-# mount the android file image
-function mountAndroid { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }
-
-# unmount the android file image
-function umountAndroid() { hdiutil detach /Volumes/android; }
+function heapdump(){
+  jmap -dump:live,format=b,file=$1 $2
+}
