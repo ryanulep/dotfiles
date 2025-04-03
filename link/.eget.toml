@@ -1,8 +1,6 @@
 [global]
     target = "~/bin"
 
-["atuinsh/atuin"]
-    asset_filters = ["^update", "^gnu"]
 ["sharkdp/bat"]
     asset_filters = ["^gnu", "^.deb"]
 ["ajeetdsouza/zoxide"]
