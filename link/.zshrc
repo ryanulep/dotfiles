@@ -25,7 +25,6 @@ function src() {
     for file in $DOTFILES/source/*; do
       source "$file"
     done
-    [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local || true
   fi
 }
 
@@ -35,3 +34,5 @@ function dotfiles() {
 }
 
 src
+
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local || true
