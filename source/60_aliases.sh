@@ -2,7 +2,9 @@
 
 # Unix
 alias mkdir="mkdir -p"
-alias zshrl='source ~/.zshrc; echo ".zshrc reloaded"'
+alias zshrl='source ~/.zshrc; exec zsh -l; echo ".zshrc reloaded"'
+
+alias zgrl="zgenom reset && zgenom clean && exec zsh -l && echo 'zgenom reloaded'"
 
 # Shortcuts
 alias android="cd ~/Uber/android"
