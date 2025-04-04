@@ -4,13 +4,9 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load.
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="bira"
+ZSH_THEME="headline"
 
 zstyle ':omz:update' mode auto      # update automatically without asking
-
-# Display red dots whilst waiting for completion.
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-COMPLETION_WAITING_DOTS="true"
 
 source $ZSH/oh-my-zsh.sh
 
