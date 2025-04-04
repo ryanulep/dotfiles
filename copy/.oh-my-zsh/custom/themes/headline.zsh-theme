@@ -226,7 +226,7 @@ HL_PRINT_MODE='precmd' # precmd|prompt
 HL_SEP_MODE='on' # on|auto|off
 
 # Print the information line always, when it has changed, or don't print
-HL_INFO_MODE='auto' # on|auto|off
+HL_INFO_MODE='on' # on|auto|off
 
 # Press <enter> with no commands to overwrite previous prompt
 HL_OVERWRITE='on' # on|off
