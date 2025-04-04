@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 
-export ZSH="$HOME/.oh-my-zsh"
 
+source $HOME/dotfiles/copy/.oh-my-zsh/custom/themes/headline.zsh-theme
+
+# TODO: Figure out why the below doesn't work with custom setup
 # Set name of the theme to load.
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="headline"
-
-zstyle ':omz:update' mode auto      # update automatically without asking
-
-source $ZSH/oh-my-zsh.sh
+# ZSH_THEME="headline"
 
 export DOTFILES="$HOME/dotfiles"
 
