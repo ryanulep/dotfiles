@@ -40,7 +40,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
   zgenom ohmyzsh plugins/last-working-dir  # Track the last used working directory and automatically jump into it for new shells
   zgenom ohmyzsh plugins/thefuck  # Fix common command line mistakes
-  zgenom ohmyzsh plugins/timer  # 
+  zgenom ohmyzsh plugins/timer  # Show timer for long running commands
 
   # Random Extras
   zgenom ohmyzsh plugins/jsontools  # Handling JSON data
