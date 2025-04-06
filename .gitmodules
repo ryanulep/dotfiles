@@ -4,3 +4,6 @@
 [submodule "link/.tmux/plugins/tpm"]
 	path = link/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "link/.zoxide"]
+	path = link/.zoxide
+	url = https://github.com/ajeetdsouza/zoxide
