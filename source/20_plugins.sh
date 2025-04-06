@@ -40,6 +40,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
   zgenom ohmyzsh plugins/last-working-dir  # Track the last used working directory and automatically jump into it for new shells
   zgenom ohmyzsh plugins/thefuck  # Fix common command line mistakes
+  zgenom ohmyzsh plugins/timer  # 
 
   # Random Extras
   zgenom ohmyzsh plugins/jsontools  # Handling JSON data
@@ -63,9 +64,8 @@ if ! zgenom saved; then
 
   # core apps
   test -d "$HOME/bin" && mkdir -p "$HOME/bin" || true
-  command -v eget > /dev/null 2>&1 || (bash "$HOME/dotfiles/scripts/eget.sh" && mv $HOME/eget $HOME/bin/)
+  command -v eget > /dev/null 2>&1 || (bash "$DOTFILES/scripts/eget.sh" && mv $HOME/eget $HOME/bin/)
 
-  # command -v starship > /dev/null 2>&1 || eget starship/starship
   command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
   # command -v atuin > /dev/null 2>&1 || eget atuinsh/atuin
 
