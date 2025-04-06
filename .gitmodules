@@ -7,3 +7,6 @@
 [submodule "link/.zoxide"]
 	path = link/.zoxide
 	url = https://github.com/ajeetdsouza/zoxide
+[submodule "link/.thefuck"]
+	path = link/.thefuck
+	url = https://github.com/nvbn/thefuck
