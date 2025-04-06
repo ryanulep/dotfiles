@@ -19,20 +19,14 @@ bash -c "$(curl -fsSL https://raw.github.com/ryanulep/dotfiles/main/bin/dotfiles
 #### or
 
 ```sh
-git clone https://github.com/ryanulep/dotfiles.git ~/dotfiles --recursive
-~/dotfiles/bin/dotfiles
+git clone https://github.com/ryanulep/dotfiles.git ~/.dotfiles --recursive
+~/.dotfiles/bin/dotfiles
 source ~/.zshrc
 ```
 
 To update the dotfiles:
 ```sh
 dotfiles
-```
-
-## If files have already been previously downloaded:
-
-```sh
-cd ~/dotfiles && dotfiles
 ```
 
 # Other Dotfiles repots to look at:
