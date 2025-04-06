@@ -3,6 +3,10 @@ source "${HOME}/.zgenom/zgenom.zsh"
 if ! zgenom saved; then
   zgenom ohmyzsh
 
+  # Default auto-update is set to 7 days
+  # Set ZGEN_PLUGIN_UPDATE_DAYS to change the default
+  zgenom load unixorn/autoupdate-zgenom
+
   # Completions
   zgenom load unixorn/fzf-zsh-plugin
   zgenom ohmyzsh plugins/fzf
@@ -10,7 +14,13 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/bazel
   zgenom load zsh-users/zsh-autosuggestions
   zgenom load zsh-users/zsh-completions
+
+  # Production environment management
   zgenom ohmyzsh plugins/docker  # auto-completion and aliases for docker.
+  zgenom ohmyzsh plugins/docker-compose
+  zgenom ohmyzsh plugins/gcloud
+  zgenom ohmyzsh plugins/kubectl
+  zgenom ohmyzsh plugins/kubectx
 
   # Git plugins
   zgenom ohmyzsh plugins/gh
@@ -20,6 +30,7 @@ if ! zgenom saved; then
   # System enhancements
   zgenom ohmyzsh plugins/iterm2
   zgenom ohmyzsh plugins/tmux
+  zgenom ohmyzsh plugins/jira
   zgenom ohmyzsh plugins/extract  # Extract compressed files
   zgenom ohmyzsh plugins/aliases  # Lists shortcuts available based on installed plugins
   zgenom ohmyzsh plugins/alias-finder  # Searches defined aliases and outputs any that match the command inputted
@@ -27,6 +38,8 @@ if ! zgenom saved; then
   zgenom load zsh-users/zsh-syntax-highlighting  # Provides CLI syntax highlighting
   zgenom ohmyzsh plugins/zoxide  # Smarter cd command
   zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
+  zgenom ohmyzsh plugins/last-working-dir  # Track the last used working directory and automatically jump into it for new shells
+  zgenom ohmyzsh plugins/thefuck  # Fix common command line mistakes
 
   # Random Extras
   zgenom ohmyzsh plugins/jsontools  # Handling JSON data
@@ -41,6 +54,7 @@ if ! zgenom saved; then
 
   [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/macos
   [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/vscode
+  [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/brew
 
   zgenom load aloxaf/fzf-tab
 
