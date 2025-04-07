@@ -1,7 +1,6 @@
 ## For a full list of active aliases, run `alias`.
 
 # Unix
-alias zshrl='source ~/.zshrc; exec zsh -l; echo ".zshrc reloaded"'
 alias zgrl="zgenom reset && zgenom clean && exec zsh -l && echo 'zgenom reloaded'"
 
 # Shortcuts
