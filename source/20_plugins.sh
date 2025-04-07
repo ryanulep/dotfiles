@@ -39,7 +39,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/zoxide  # Smarter cd command
   zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
   zgenom ohmyzsh plugins/last-working-dir  # Track the last used working directory and automatically jump into it for new shells
-  zgenom ohmyzsh plugins/thefuck  # Fix common command line mistakes
+  # zgenom ohmyzsh plugins/thefuck  # Fix common command line mistakes
 
   # Random Extras
   zgenom ohmyzsh plugins/jsontools  # Handling JSON data
@@ -69,7 +69,7 @@ if ! zgenom saved; then
 
   # Install core apps
   command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
-  command -v thefuck > /dev/null 2>&1 || eget nvbn/thefuck
+  # command -v thefuck > /dev/null 2>&1 || eget nvbn/thefuck
   command -v bat > /dev/null 2>&1 || eget sharkdp/bat
   command -v fd > /dev/null 2>&1 || eget sharkdp/fd
 
@@ -77,7 +77,7 @@ if ! zgenom saved; then
   lazyload nvm npm node -- 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
 
   zgenom eval --name zoxide <<(zoxide init zsh)
-  eval $(thefuck --alias wtf)
+  # eval $(thefuck --alias wtf)
 
   # save all to init script
   zgenom save
