@@ -2,7 +2,7 @@ source "${HOME}/.zgenom/zgenom.zsh"
 
 # Check for plugin and zgenom updates every 7 days
 # This does not increase the startup time.
-zgenom autoupdate
+# zgenom autoupdate
 
 if ! zgenom saved; then
   zgenom ohmyzsh
@@ -69,7 +69,7 @@ if ! zgenom saved; then
 
   # Install core apps
   command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
-  # command -v fuck > /dev/null 2>&1 || eget nvbn/thefuck
+  command -v thefuck > /dev/null 2>&1 || eget nvbn/thefuck
   command -v bat > /dev/null 2>&1 || eget sharkdp/bat
   command -v fd > /dev/null 2>&1 || eget sharkdp/fd
 
@@ -77,6 +77,7 @@ if ! zgenom saved; then
   lazyload nvm npm node -- 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
 
   zgenom eval --name zoxide <<(zoxide init zsh)
+  eval $(thefuck --alias wtf)
 
   # save all to init script
   zgenom save
