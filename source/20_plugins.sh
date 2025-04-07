@@ -41,7 +41,6 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/zoxide  # Smarter cd command
   zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
   zgenom ohmyzsh plugins/last-working-dir  # Track the last used working directory and automatically jump into it for new shells
-  zgenom ohmyzsh plugins/thefuck  # Fix common command line mistakes
 
   # Random Extras
   zgenom ohmyzsh plugins/jsontools  # Handling JSON data

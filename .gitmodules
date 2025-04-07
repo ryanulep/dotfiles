@@ -5,6 +5,3 @@
 [submodule "link/.tmux/plugins/tpm"]
 	path = link/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
-[submodule "link/.thefuck"]
-	path = link/.thefuck
-	url = https://github.com/nvbn/thefuck
