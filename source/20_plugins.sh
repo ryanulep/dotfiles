@@ -85,4 +85,6 @@ if ! zgenom saved; then
   zgenom compile "$HOME/.zshrc"
 
   # You can perform other "time consuming" maintenance tasks here as well.
+  # If you use `zgenom autoupdate` you're making sure it gets
+  # executed every 7 days.
 fi

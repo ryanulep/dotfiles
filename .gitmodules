@@ -1,6 +1,7 @@
 [submodule "link/.zgenom"]
 	path = link/.zgenom
 	url = https://github.com/jandamm/zgenom
+	branch = main
 [submodule "link/.tmux/plugins/tpm"]
 	path = link/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
