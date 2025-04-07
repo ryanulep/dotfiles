@@ -70,7 +70,6 @@ if ! zgenom saved; then
 
   # Install core apps
   command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
-  command -v fuck > /dev/null 2>&1 || eget nvbn/thefuck
   command -v bat > /dev/null 2>&1 || eget sharkdp/bat
   command -v fd > /dev/null 2>&1 || eget sharkdp/fd
 
