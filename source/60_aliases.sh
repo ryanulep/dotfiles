@@ -1,7 +1,7 @@
 ## For a full list of active aliases, run `alias`.
 
 # Unix
-alias zgrl="zgenom reset && zgenom clean && exec zsh -l && echo 'zgenom reloaded'"
+alias zgrl="zgenom reset && zgenom clean"
 
 # Shortcuts
 alias android="cd ~/Uber/android"
