@@ -1,11 +1,11 @@
 source "${HOME}/.zgenom/zgenom.zsh"
 
+# Check for plugin and zgenom updates every 7 days
+# This does not increase the startup time.
+zgenom autoupdate
+
 if ! zgenom saved; then
   zgenom ohmyzsh
-
-  # Default auto-update is set to 7 days
-  # Set ZGEN_PLUGIN_UPDATE_DAYS to change the default
-  zgenom load unixorn/autoupdate-zgenom
 
   # Completions
   zgenom load unixorn/fzf-zsh-plugin
@@ -40,26 +40,27 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
   zgenom ohmyzsh plugins/last-working-dir  # Track the last used working directory and automatically jump into it for new shells
   zgenom ohmyzsh plugins/thefuck  # Fix common command line mistakes
-  zgenom ohmyzsh plugins/timer  # Show timer for long running commands
 
   # Random Extras
   zgenom ohmyzsh plugins/jsontools  # Handling JSON data
   zgenom ohmyzsh plugins/colored-man-pages  # Colored man pages
   zgenom ohmyzsh plugins/copyfile
   zgenom ohmyzsh plugins/copypath
+  zgenom load djui/alias-tips  # Warns you when you have an alias for the command you just typed
 
   zgenom load jandamm/zgenom-ext-eval
   zgenom load jandamm/zgenom-ext-release
   zgenom load jandamm/zgenom-ext-run
   zgenom load qoomon/zsh-lazyload
 
+  # Install macOS only plugins, if needed
   [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/macos
   [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/vscode
   [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/brew
 
   zgenom load aloxaf/fzf-tab
 
-  # add binaries
+  # Add binaries
   zgenom bin tj/git-extras
 
   # Setup eget to download core apps
@@ -68,7 +69,7 @@ if ! zgenom saved; then
 
   # Install core apps
   command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
-  command -v thefuck > /dev/null 2>&1 || eget nvbn/thefuck
+  command -v fuck > /dev/null 2>&1 || eget nvbn/thefuck
   command -v bat > /dev/null 2>&1 || eget sharkdp/bat
   command -v fd > /dev/null 2>&1 || eget sharkdp/fd
 
@@ -84,7 +85,4 @@ if ! zgenom saved; then
   zgenom compile "$HOME/.zshrc"
 
   # You can perform other "time consuming" maintenance tasks here as well.
-  # If you use `zgenom autoupdate` you're making sure it gets
-  # executed every 7 days.
-  zgenom autoupdate
 fi
