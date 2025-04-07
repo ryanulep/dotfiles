@@ -80,7 +80,7 @@ if ! zgenom saved; then
   lazyload nvm npm node -- 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
 
   zgenom eval --name zoxide <<(zoxide init zsh)
-  zgenom eval --name fuck << eval $(thefuck --alias wtf)
+  zgenom eval --name fuck <<(thefuck --alias wtf)
 
   # save all to init script
   zgenom save
