@@ -7,7 +7,7 @@ alias zgrl="zgenom reset && zgenom clean"
 alias android="cd ~/Uber/android"
 
 # Build Systems
-# alias bazel="./bazelw"
+alias bazel="./bazelw"
 alias buck="./buckw"
 alias lint='./lintw'
 
