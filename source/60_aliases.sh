@@ -6,11 +6,6 @@ alias zgrl="zgenom reset && zgenom clean"
 # Shortcuts
 alias android="cd ~/Uber/android"
 
-# Build Systems
-alias bazel="./bazelw"
-alias buck="./buckw"
-alias lint='./lintw'
-
 # Fzf
 alias fzf="fzf --style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
 
