@@ -3,9 +3,6 @@
 # Unix
 alias zgrl="zgenom reset && zgenom clean"
 
-# Shortcuts
-alias android="cd ~/Uber/android"
-
 # Fzf
 alias fzf="fzf --style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
 
