@@ -29,7 +29,7 @@ To update the dotfiles:
 dotfiles
 ```
 
-# Other Dotfiles repots to look at:
+# Other Dotfiles repos to look at:
 - https://github.com/tyvsmith/dotfiles
 - https://github.com/jbarr21/dotfiles
 - https://github.com/holman/dotfiles
