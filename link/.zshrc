@@ -2,6 +2,9 @@
 
 export DOTFILES="$HOME/.dotfiles"
 
+# Enable Oh My Zsh auto-update
+zstyle ':omz:update' mode auto
+
 # TODO: Figure out why the below doesn't work with custom setup
 # Set name of the theme to load.
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
