@@ -2,10 +2,13 @@ source "${HOME}/.zgenom/zgenom.zsh"
 
 # Check for plugin and zgenom updates every 7 days
 # This does not increase the startup time.
-# zgenom autoupdate
+zgenom autoupdate
 
 if ! zgenom saved; then
   zgenom ohmyzsh
+
+  # Enable Oh My Zsh auto-update
+  # zgenom load unixorn/autoupdate-zgenom
 
   # Completions
   zgenom load unixorn/fzf-zsh-plugin
