@@ -1,12 +1,10 @@
 if [ -z "$DEVPOD_NAME" ]; then
   if [ $(uname -s) = "Darwin" ]; then
     unset JAVA_HOME
-    export JDK_16="$(/usr/libexec/java_home -v1.6)"
-    export JDK_17="$(/usr/libexec/java_home -v1.7)"
-    export JDK_18="$(/usr/libexec/java_home -v1.8)"
-    export JDK_9="$(/usr/libexec/java_home -v9)"
     export JDK_11="$(/usr/libexec/java_home -v11)"
-    export JAVA_HOME=$JDK_11
+    export JDK_17="$(/usr/libexec/java_home -v17)"
+    export JDK_21="$(/usr/libexec/java_home -v21)"
+    export JAVA_HOME=$JDK_21
   else
     export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
   fi
