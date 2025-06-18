@@ -4,7 +4,7 @@ if [ -z "$DEVPOD_NAME" ]; then
     export JDK_11="$(/usr/libexec/java_home -v11)"
     export JDK_17="$(/usr/libexec/java_home -v17)"
     export JDK_21="$(/usr/libexec/java_home -v21)"
-    export JAVA_HOME=$JDK_21
+    export JAVA_HOME=$JDK_17
   else
     export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
   fi
