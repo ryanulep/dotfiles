@@ -1,5 +1,15 @@
 source "${HOME}/.zgenom/zgenom.zsh"
 
+## Pre-work before loading plugins
+
+ZSH_WEB_SEARCH_ENGINES=(
+    glean "https://usearch.glean.com/search?q="  # Glean Search
+    adoc "https://developer.android.com/s/results?q="  # Android Developer Docs
+    bzdoc "https://bazel.build/s/results?q="  # Bazel Docs
+    javadoc "https://docs.oracle.com/search/?category=java&product=en%2Fjava&q="
+    kdoc "https://kotlinlang.org/docs/home.html?s=full&q="  # Kotlin Docs
+)
+
 # Check for plugin and zgenom updates every 7 days
 # This does not increase the startup time.
 # zgenom autoupdate
@@ -22,23 +32,24 @@ if ! zgenom saved; then
   zgenom load zsh-users/zsh-completions
 
   # Production environment management
-  zgenom ohmyzsh plugins/docker  # auto-completion and aliases for docker.
+  zgenom ohmyzsh plugins/docker
   zgenom ohmyzsh plugins/docker-compose
-  zgenom ohmyzsh plugins/gcloud
-  zgenom ohmyzsh plugins/aws
   zgenom ohmyzsh plugins/kubectl
   zgenom ohmyzsh plugins/kubectx
+  zgenom ohmyzsh plugins/gcloud
+  zgenom ohmyzsh plugins/aws
 
   # Git plugins
   zgenom ohmyzsh plugins/gh
   zgenom ohmyzsh plugins/git
   zgenom ohmyzsh plugins/github
-  zgenom ohmyzsh plugins/arcanist
+  zgenom ohmyzsh plugins/git-prompt
+  zgenom ohmyzsh plugins/tig
 
   # System enhancements
   zgenom ohmyzsh plugins/iterm2
   zgenom ohmyzsh plugins/tmux
-  zgenom ohmyzsh plugins/jira
+  zgenom ohmyzsh plugins/wd  # Jump to custom directories in zsh without using `cd`
   zgenom ohmyzsh plugins/extract  # Extract compressed files
   zgenom ohmyzsh plugins/aliases  # Lists shortcuts available based on installed plugins
   zgenom ohmyzsh plugins/alias-finder  # Searches defined aliases and outputs any that match the command inputted
@@ -47,13 +58,20 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/zoxide  # Smarter cd command
   zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
   zgenom ohmyzsh plugins/last-working-dir  # Track the last used working directory and automatically jump into it for new shells
+  zgenom ohmyzsh plugins/common-aliases  # Creates helpful shortcut aliases for many commonly used commands
+  zgenom ohmyzsh plugins/zsh-interactive-cd  # Interactive way to change directories in zsh using fzf
+
+  # Productivity
+  zgenom ohmyzsh plugins/web-search  # Search the web from the command line
 
   # Random Extras
+  zgenom load djui/alias-tips  # Warns you when you have an alias for the command you just typed
   zgenom ohmyzsh plugins/jsontools  # Handling JSON data
   zgenom ohmyzsh plugins/colored-man-pages  # Colored man pages
   zgenom ohmyzsh plugins/copyfile
+  zgenom ohmyzsh plugins/copybuffer  # Copy the contents of buffer to the clipboard using Ctrl + "O"
   zgenom ohmyzsh plugins/copypath
-  zgenom load djui/alias-tips  # Warns you when you have an alias for the command you just typed
+  zgenom ohmyzsh plugins/timer  # Timer plugin to measure the time it takes to run a command
 
   zgenom load jandamm/zgenom-ext-eval
   zgenom load jandamm/zgenom-ext-release
@@ -64,6 +82,7 @@ if ! zgenom saved; then
   [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/macos
   [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/vscode
   [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/brew
+  [[ "$(uname -s)" = Darwin ]] && zgenom ohmyzsh plugins/xcode
 
   zgenom load aloxaf/fzf-tab
 
