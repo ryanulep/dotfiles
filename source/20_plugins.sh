@@ -38,6 +38,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/kubectx
   zgenom ohmyzsh plugins/gcloud
   zgenom ohmyzsh plugins/aws
+  zgenom load Cloudstek/zsh-plugin-appup
 
   # Git plugins
   zgenom ohmyzsh plugins/gh
