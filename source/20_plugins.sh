@@ -32,7 +32,7 @@ if ! zgenom saved; then
   zgenom load zsh-users/zsh-completions
 
   # Production environment management
-  zgenom ohmyzsh plugins/docker
+  zgenom ohmyzsh plugins/docker  # auto-completion and aliases for Docker
   zgenom ohmyzsh plugins/docker-compose
   zgenom ohmyzsh plugins/kubectl
   zgenom ohmyzsh plugins/kubectx
@@ -75,7 +75,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/timer  # Timer plugin to measure the time it takes to run a command
 
   zgenom load jandamm/zgenom-ext-eval
-  zgenom load jandamm/zgenom-ext-release
+  zgenom load jandamm/zgenom-ext-release  # Download releases from GitHub
   zgenom load jandamm/zgenom-ext-run
   zgenom load qoomon/zsh-lazyload
 
@@ -94,10 +94,12 @@ if ! zgenom saved; then
   test -d "$HOME/bin" || mkdir -p "$HOME/bin"
   command -v eget > /dev/null 2>&1 || (bash "$DOTFILES/scripts/eget.sh" && mv $HOME/eget $HOME/bin/)
 
-  # Install core apps
+  # Install core apps using eget
   command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
   command -v bat > /dev/null 2>&1 || eget sharkdp/bat
-  command -v fd > /dev/null 2>&1 || echo "1" | eget sharkdp/fd
+  command -v ripgrep > /dev/null 2>&1 | eget BurntSushi/ripgrep
+  command -v fd > /dev/null 2>&1 | eget sharkdp/fd
+  # command -v ranger > /dev/null 2>&1 | eget ranger/ranger ## Currently not working with zgenom
 
   lazyload sdk -- 'export SDKMAN_DIR="$HOME/.sdkman" && source "$HOME/.sdkman/bin/sdkman-init.sh"'
   lazyload nvm npm node -- 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
