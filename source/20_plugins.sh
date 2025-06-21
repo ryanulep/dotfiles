@@ -46,6 +46,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/github
   zgenom ohmyzsh plugins/git-prompt
   zgenom ohmyzsh plugins/tig
+  zgenom load so-fancy/diff-so-fancy
 
   # System enhancements
   zgenom ohmyzsh plugins/iterm2
