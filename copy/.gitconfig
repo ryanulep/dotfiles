@@ -16,6 +16,9 @@
 
 [include]
   path = ~/.gitconfig.local
+[diff]
+    colorMoved = default
+    wordRegex = .
 [core]
     excludesfile = ~/.gitignore
     pager = diff-so-fancy | less --tabs=4 -RF
