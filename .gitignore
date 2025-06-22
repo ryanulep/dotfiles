@@ -1,3 +1,4 @@
 *.local
 vim/bundle/*
 backups/
+.DS_STORE
