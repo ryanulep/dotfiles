@@ -1,29 +1,23 @@
-[color]
-  ui = true
-[color "diff-highlight"]
-    oldNormal = red bold
-    oldHighlight = red bold 52
-    newNormal = green bold
-    newHighlight = green bold 22
-[color "diff"]
-    meta = 11
-    frag = magenta bold
-    func = 146 bold
-    commit = yellow bold
-    old = red bold
-    new = green bold
-    whitespace = red reverse
-
 [include]
   path = ~/.gitconfig.local
-[diff]
-    colorMoved = default
-    wordRegex = .
+  path = ~/.delta/themes.gitconfig
+[delta]
+    features = hoopoe
+    # Dark Themes: colibri, calochortus-lyallii, chameleon, mantis-shrimp
+    # Light Themes: coracias-caudatus, hoopoe
+    navigate = true  # use n and N to move between diff sections
+    side-by-side = true
+    hyperlinks = true
+    hyperlinks-file-link-format = "idea://open?file={path}&line={line}"
+    detect-dark-light = always
+    diff-so-fancy = true
 [core]
     excludesfile = ~/.gitignore
-    pager = diff-so-fancy | less --tabs=4 -RF
+    pager = delta
     autocrlf = input
+[diff]
+    colorMoved = default
+[merge]
+    conflictstyle = zdiff3
 [interactive]
-    diffFilter = diff-so-fancy --patch
-[pager]
-    diff = diff-so-fancy | less --tabs=4 -RFXS --pattern '^(Date|added|deleted|modified): '
+    diffFilter = delta --color-only
