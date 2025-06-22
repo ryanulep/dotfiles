@@ -62,7 +62,6 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/tmux
   zgenom ohmyzsh plugins/dotenv  # Load .env files automatically
   zgenom ohmyzsh plugins/thefuck  # Corrects mistyped commands
-  zgenom load zsh-users/zsh-syntax-highlighting  # Provides CLI syntax highlighting
   zgenom ohmyzsh plugins/aliases  # Lists shortcuts available based on installed plugins
   zgenom ohmyzsh plugins/alias-finder  # Searches defined aliases and outputs any that match the command inputted
   zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
@@ -77,6 +76,8 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/timer  # Timer plugin to measure the time it takes to run a command
   zgenom load brymck/print-alias  # Prints commands with aliases expanded on the CLI
   zgenom load toku-sa-n/zsh-dot-up  # Quickly navigate up directories in the file system
+  ## IMPORTANT: zsh-dot-up has to be loaded before zsh-syntax-highlighting
+  zgenom load zsh-users/zsh-syntax-highlighting  # Provides CLI syntax highlighting
 
   # Productivity
   zgenom ohmyzsh plugins/web-search  # Search the web from the command line
