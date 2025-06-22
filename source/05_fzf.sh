@@ -1,7 +1,7 @@
 ## Fzf (The following setup is from https://github.com/junegunn/fzf)
 export FZF_DEFAULT_OPTS=""
 # Setting fd as the default source for fzf; add `--hidden`` so that hidden files are included below
-# export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --follow --exclude .git'
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --follow --exclude .git'
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
   --bind="ctrl-o:execute(code {})+abort"'
 # To apply the command to CTRL-T as well
