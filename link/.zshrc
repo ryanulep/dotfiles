@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 export DOTFILES="$HOME/.dotfiles"
+export ZSH_CUSTOM=$HOME/.config/ohmyzsh/custom
 
 # Enable Oh My Zsh auto-update
 zstyle ':omz:update' mode auto
 
-# TODO: Figure out why the below doesn't work with custom setup
-# Set name of the theme to load.
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="headline"
+# ZSH_THEME="intheloop"
+# ZSH_THEME="headline-modern"
 
-source $DOTFILES/copy/.oh-my-zsh/custom/themes/headline.zsh-theme
+source "$DOTFILES/config/ohmyzsh/custom/themes/headline-modern.zsh-theme"
 
 # Source all files in "source"
 function src() {
