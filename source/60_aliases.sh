@@ -2,7 +2,7 @@
 alias cat='bat --style plain'
 
 # Unix
-alias zgrl="zgenom reset && zgenom clean"
+alias zgrl="zgenom reset && zgenom clean && zgenom save"
 
 # Fzf
 alias fzf="fzf --style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
