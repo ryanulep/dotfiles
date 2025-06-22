@@ -10,10 +10,6 @@ ZSH_WEB_SEARCH_ENGINES=(
     kdoc "https://kotlinlang.org/docs/home.html?s=full&q="  # Kotlin Docs
 )
 
-# Check for plugin and zgenom updates every 7 days
-# This does not increase the startup time.
-# zgenom autoupdate
-
 if ! zgenom saved; then
   echo "Creating a zgenom save"
 
