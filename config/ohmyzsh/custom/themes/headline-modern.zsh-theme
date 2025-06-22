@@ -91,12 +91,12 @@ declare -a HL_LAYOUT_ORDER=(
 declare -A HL_LAYOUT_TEMPLATE=(
   _PRE    "${IS_SSH+ssh }" # shows "ssh " if this is an ssh session
   USER    '...'
-  HOST    ' at ...'
-  VENV    ' with ...'
-  PATH    ' in ...'
+  HOST    " %{$reset$faint%}@%{$reset$HL_LAYOUT_STYLE%} ..."
+  VENV    ' (...)'
+  PATH    " %{$reset$faint%}in%{$reset$HL_LAYOUT_STYLE%} ..."
   _SPACER '' # special, only shows when compact, otherwise fill with space
-  BRANCH  ' on ...'
-  STATUS  ' (...)'
+  BRANCH  "..."
+  STATUS  ' [...]'
   _POST   ''
 )
 
