@@ -56,7 +56,6 @@ if ! zgenom saved; then
   # Shell enhancements
   zgenom ohmyzsh plugins/iterm2
   zgenom ohmyzsh plugins/tmux
-  zgenom load fdellwing/zsh-bat
   zgenom ohmyzsh plugins/direnv  # Load and unload environment variables per directory
   zgenom ohmyzsh plugins/dotenv  # Load .env files automatically
   zgenom ohmyzsh plugins/thefuck  # Corrects mistyped commands
