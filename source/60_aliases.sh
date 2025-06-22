@@ -1,5 +1,5 @@
 ## For a full list of active aliases, run `alias`.
-alias cat='bat --style plain --paging=never'
+alias cat='bat --theme auto:system --style plain --paging=never'
 
 # Fzf
 alias fzf="fzf --style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
