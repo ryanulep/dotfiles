@@ -61,6 +61,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/iterm2
   zgenom ohmyzsh plugins/tmux
   zgenom load fdellwing/zsh-bat
+  zgenom ohmyzsh plugins/direnv  # Load and unload environment variables per directory
   zgenom ohmyzsh plugins/dotenv  # Load .env files automatically
   zgenom ohmyzsh plugins/thefuck  # Corrects mistyped commands
   zgenom ohmyzsh plugins/aliases  # Lists shortcuts available based on installed plugins
@@ -112,12 +113,6 @@ if ! zgenom saved; then
   # Install core apps using eget
   command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
   command -v bat > /dev/null 2>&1 || eget sharkdp/bat
-  command -v direnv > /dev/null 2>&1 || eget direnv/direnv
-  command -v rg > /dev/null 2>&1 || eget BurntSushi/ripgrep
-  command -v fd > /dev/null 2>&1 || eget sharkdp/fd
-
-  # Install plugins required after the core apps are installed
-  zgenom ohmyzsh plugins/direnv  # Load and unload environment variables per directory
 
   # Lazy load plugins which are not needed at startup
   lazyload sdk -- 'export SDKMAN_DIR="$HOME/.sdkman" && source "$HOME/.sdkman/bin/sdkman-init.sh"'
