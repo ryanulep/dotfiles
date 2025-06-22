@@ -10,8 +10,6 @@ zstyle ':omz:update' mode auto
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="headline"
 
-[[ -f ~/.zshenv.local ]] && source ~/.zshenv.local || true
-
 source $DOTFILES/copy/.oh-my-zsh/custom/themes/headline.zsh-theme
 
 # Source all files in "source"
