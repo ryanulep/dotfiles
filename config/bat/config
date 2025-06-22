@@ -1,6 +1,6 @@
 # Set the theme based on terminal colors
---theme-light="GitHub"
---theme-dark="TwoDark"
+--theme-light="OneHalfLight"
+--theme-dark="OneHalfDark"
 
 # Show line numbers, Git modifications and file header (but no grid)
 --style="numbers,changes,header"
