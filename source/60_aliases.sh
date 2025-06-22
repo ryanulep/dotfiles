@@ -2,7 +2,7 @@
 alias cat='bat --theme auto:system --style plain --paging=never'
 
 # Fzf
-alias fzf="fzf --style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
+alias fzf="fzf --style full --preview 'bat -n --theme auto:system --color=always {}' --bind 'focus:transform-header:file --brief {}'"
 
 # Include custom aliases
 if [[ -f ~/.aliases.local ]]; then
