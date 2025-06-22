@@ -314,7 +314,12 @@ function copy_test() {
 }
 function copy_do() {
   e_success "Copying ~/$1."
-  cp "$2" ~/
+  if [[ -d "$2" ]]; then
+    mkdir -p ~/$2
+    cp -r "$2" ~/
+  else
+    cp "$2" ~/
+  fi
 }
 
 # Link files.
