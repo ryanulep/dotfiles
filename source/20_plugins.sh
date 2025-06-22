@@ -76,6 +76,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/colored-man-pages  # Colored man pages
   zgenom ohmyzsh plugins/timer  # Timer plugin to measure the time it takes to run a command
   zgenom load brymck/print-alias  # Prints commands with aliases expanded on the CLI
+  zgenom load toku-sa-n/zsh-dot-up  # Quickly navigate up directories in the file system
 
   # Productivity
   zgenom ohmyzsh plugins/web-search  # Search the web from the command line
