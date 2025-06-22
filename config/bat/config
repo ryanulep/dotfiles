@@ -1,4 +1,5 @@
 # Set the theme based on terminal colors
+--theme="auto:system"
 --theme-light="OneHalfLight"
 --theme-dark="OneHalfDark"
 

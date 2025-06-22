@@ -10,7 +10,7 @@ export FZF_CTRL_T_OPTS="
   --height=80%
   --style full
   --walker-skip .git,node_modules,target
-  --preview 'bat -n --theme auto:system --color=always {}'
+  --preview 'bat -n --color=always {}'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 # CTRL-Y to copy the command into clipboard using pbcopy
 export FZF_CTRL_R_OPTS="
