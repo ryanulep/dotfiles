@@ -2,3 +2,4 @@
 vim/bundle/*
 backups/
 .DS_STORE
+link/.tmux/plugins
