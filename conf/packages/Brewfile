@@ -84,7 +84,7 @@ cask "the-unarchiver"
 cask "visual-studio-code"
 cask "zoom"
 
-# mas "1Password", id: 1333542190
+mas "1Password", id: 1333542190
 mas "Unsplash Wallpapers", id: 1284863847
 mas "Xcode", id: 497799835
 mas "Yubico", id: 1497506650
