@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export DOTFILES="$HOME/.dotfiles"
-export ZSH_CUSTOM=$HOME/.config/ohmyzsh/custom
+export ZSH_CUSTOM=$DOTFILES/config/ohmyzsh/custom
 
 # Enable Oh My Zsh auto-update
 zstyle ':omz:update' mode auto
@@ -10,7 +10,7 @@ zstyle ':omz:update' mode auto
 # ZSH_THEME="intheloop"
 # ZSH_THEME="headline-modern"
 
-source "$DOTFILES/config/ohmyzsh/custom/themes/headline-modern.zsh-theme"
+source "ZSH_CUSTOM/themes/headline-modern.zsh-theme"
 
 # Source all files in "source"
 function src() {
