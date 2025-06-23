@@ -17,6 +17,7 @@ if ! zgenom saved; then
 
   # Check for plugin and zgenom updates every 7 days
   zgenom load unixorn/autoupdate-zgenom
+  zgenom load Pilaton/OhMyZsh-full-autoupdate
 
   # Completions
   zgenom load unixorn/fzf-zsh-plugin
@@ -40,7 +41,6 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/gh
   zgenom ohmyzsh plugins/git
   zgenom ohmyzsh plugins/github
-  zgenom ohmyzsh plugins/git-prompt
   zgenom ohmyzsh plugins/tig
   zgenom load so-fancy/diff-so-fancy
 
@@ -56,8 +56,7 @@ if ! zgenom saved; then
   # Shell enhancements
   zgenom ohmyzsh plugins/iterm2
   zgenom ohmyzsh plugins/tmux
-  zgenom ohmyzsh plugins/direnv  # Load and unload environment variables per directory
-  zgenom ohmyzsh plugins/dotenv  # Load .env files automatically
+  # zgenom ohmyzsh plugins/direnv  # Load and unload environment variables per directory
   zgenom ohmyzsh plugins/thefuck  # Corrects mistyped commands
   zgenom ohmyzsh plugins/aliases  # Lists shortcuts available based on installed plugins
   zgenom ohmyzsh plugins/alias-finder  # Searches defined aliases and outputs any that match the command inputted
