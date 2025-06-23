@@ -1,7 +1,7 @@
 setopt hist_ignore_all_dups inc_append_history
 setopt share_history
 HISTFILE=~/.zsh_history
-HISTORY_IGNORE='(l|ls|ll|cd|cd ..|z|pwd|exit|date|history|clear)'
+HISTORY_IGNORE='(l|ls|ll|cd|cd ..|z|pwd|exit|date|history|clear|tmux|tmux attach)'
 HISTSIZE=290000
 SAVEHIST=$HISTSIZE
 
