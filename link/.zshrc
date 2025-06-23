@@ -10,7 +10,7 @@ zstyle ':omz:update' mode auto
 # ZSH_THEME="intheloop"
 # ZSH_THEME="headline-modern"
 
-source "ZSH_CUSTOM/themes/headline-modern.zsh-theme"
+source "$ZSH_CUSTOM/themes/headline-modern.zsh-theme"
 
 # Source all files in "source"
 function src() {
