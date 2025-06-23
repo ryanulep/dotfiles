@@ -90,11 +90,11 @@ declare -a HL_LAYOUT_ORDER=(
 # Template for each segment's layout
 declare -A HL_LAYOUT_TEMPLATE=(
   _PRE    "${IS_SSH+ssh }" # shows "ssh " if this is an ssh session
-  USER    '...'
-  HOST    " %{$reset$faint%}@%{$reset$HL_LAYOUT_STYLE%} ..."
+  USER    '... %{$reset$faint%}@%{$reset$HL_LAYOUT_STYLE%} '
+  HOST    "..."
   VENV    ' (...)'
   PATH    " %{$reset$faint%}in%{$reset$HL_LAYOUT_STYLE%} ..."
-  _SPACER '' # special, only shows when compact, otherwise fill with space
+  _SPACER '  ' # special, only shows when compact, otherwise fill with space
   BRANCH  "..."
   STATUS  ' [...]'
   _POST   ''
@@ -160,15 +160,15 @@ declare -A HL_GIT_STATUS_SYMBOLS=(
 
 # Minimum screen width to show segment
 declare -A HL_COLS_REMOVAL=(
-  USER   50
-  HOST   70
+  USER   70
+  HOST   50
   VENV   30
   # ...
 )
 
 # Order to truncate & remove segments
 declare -a HL_TRUNC_ORDER=(
-  HOST USER VENV PATH BRANCH # ...
+  USER HOST VENV PATH BRANCH # ...
 )
 
 # Symbol to insert when truncating a segment
