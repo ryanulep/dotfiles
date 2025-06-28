@@ -54,11 +54,9 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/colorize  # Provides syntax highlighting for files
   zgenom ohmyzsh plugins/zoxide  # Smarter cd command
   zgenom ohmyzsh plugins/cp
-  zgenom load mrjohannchang/zsh-interactive-cd  # Interactive way to change directories in zsh using fzf
 
   # Shell enhancements
   zgenom ohmyzsh plugins/iterm2
-  zgenom ohmyzsh plugins/tmux
   # zgenom ohmyzsh plugins/direnv  # Load and unload environment variables per directory
   zgenom ohmyzsh plugins/thefuck  # Corrects mistyped commands
   zgenom ohmyzsh plugins/aliases  # Lists shortcuts available based on installed plugins
