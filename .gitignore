@@ -3,4 +3,3 @@ vim/bundle/*
 backups/
 .DS_STORE
 link/.tmux/plugins/*
-!link/.tmux/plugins/custom_modules
