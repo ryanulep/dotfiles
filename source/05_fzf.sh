@@ -30,7 +30,7 @@ export FZF_CTRL_T_OPTS="
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 # CTRL-Y to copy the command into clipboard using pbcopy
 export FZF_CTRL_R_OPTS='
-  --height ~70%
+  --height 60%
   --style full
   --multi
   --header-label ""
