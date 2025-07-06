@@ -1,4 +1,3 @@
-## Fzf (The following setup is from https://github.com/junegunn/fzf)
 export FZF_DEFAULT_OPTS='
   --tmux 90%
   --style full
@@ -21,13 +20,12 @@ export FZF_DEFAULT_OPTS='
   --color "header-border:3,header:11,header-label:11"
   --color "hl+:2,hl:10"
   --bind "ctrl-o:execute(code {})+abort"'
-# Setting fd as the default source for fzf; add `--hidden`` so that hidden files are included below
-export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --follow --exclude .git'
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="
   --height ~80%
   --style full
+  --preview 'fzf-preview.sh {}'
   --walker-skip .git,node_modules,target
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 # CTRL-Y to copy the command into clipboard using pbcopy
@@ -48,8 +46,8 @@ zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ":completion:*:git-checkout:*" sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':fzf-tab:complete:export:*' fzf-preview 'eval "echo \$$word"'
-zstyle ':fzf-tab:complete:unset:*' fzf-preview 'eval "echo \$$word"'
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
+	fzf-preview 'echo ${(P)word}'
 
 if [[ ! -z "$DEVPOD_NAME" ]]; then
     # Install latest version on devpod
