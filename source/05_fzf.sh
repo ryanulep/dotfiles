@@ -29,7 +29,6 @@ export FZF_CTRL_T_OPTS="
   --height ~80%
   --style full
   --walker-skip .git,node_modules,target
-  --preview 'file --mime {} | grep -q text && bat -n --color=always {} || echo \"🛈 Binary or unsupported file type\"'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 # CTRL-Y to copy the command into clipboard using pbcopy
 export FZF_CTRL_R_OPTS='
