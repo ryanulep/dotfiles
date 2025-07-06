@@ -1,31 +1,56 @@
 ## Fzf (The following setup is from https://github.com/junegunn/fzf)
-export FZF_DEFAULT_OPTS=""
+export FZF_DEFAULT_OPTS='
+  --tmux 90%
+  --style full
+  --input-label " Input "
+  --bind "result:transform-list-label:
+        if [[ -z \$FZF_QUERY ]]; then
+          echo \" \$FZF_MATCH_COUNT items \"
+        else
+          echo \" \$FZF_MATCH_COUNT matches for [\$FZF_QUERY] \"
+        fi
+        "
+  --bind "focus:transform-preview-label:[[ -n {} ]] && printf \" Previewing [%s] \" {}"
+  --marker ">"
+  --color "border:7,label:15"
+  --color "preview-border:6,preview-label:14"
+  --color "list-border:2,list-label:10"
+  --color "input-border:4,input-label:12"
+  --color "prompt:12,info:5"
+  --color "spinner:5,pointer:9"
+  --color "header-border:3,header:11,header-label:11"
+  --color "hl+:2,hl:10"
+  --bind "ctrl-o:execute(code {})+abort"'
 # Setting fd as the default source for fzf; add `--hidden`` so that hidden files are included below
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --follow --exclude .git'
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
-  --bind="ctrl-o:execute(code {})+abort"'
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="
-  --height=80%
+  --height ~80%
   --style full
   --walker-skip .git,node_modules,target
-  --preview 'bat -n --color=always {}'
+  --preview 'file --mime {} | grep -q text && bat -n --color=always {} || echo \"🛈 Binary or unsupported file type\"'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 # CTRL-Y to copy the command into clipboard using pbcopy
-export FZF_CTRL_R_OPTS="
-  --height=60%
+export FZF_CTRL_R_OPTS='
+  --height ~70%
   --style full
   --multi
-  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --header-label ""
+  --bind "ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort"
   --color header:italic
-  --header 'Press CTRL-Y to copy the command into the clipboard'"
+  --header "Press CTRL-Y to copy the command into the clipboard"'
 
 # fzf-tab
+# To make fzf-tab follow FZF_DEFAULT_OPTS.
+# NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ":completion:*:git-checkout:*" sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:export:*' fzf-preview 'eval "echo \$$word"'
+zstyle ':fzf-tab:complete:unset:*' fzf-preview 'eval "echo \$$word"'
 
 if [[ ! -z "$DEVPOD_NAME" ]]; then
     # Install latest version on devpod
