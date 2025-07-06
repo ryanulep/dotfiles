@@ -1,23 +1,32 @@
 [include]
   path = ~/.gitconfig.local
   path = ~/.delta/themes.gitconfig
+
 [delta]
-    features = hoopoe
     # Dark Themes: colibri, calochortus-lyallii, chameleon, mantis-shrimp
     # Light Themes: coracias-caudatus, hoopoe
+    features = hoopoe diff-lines
     navigate = true  # use n and N to move between diff sections
-    side-by-side = true
-    hyperlinks = true
-    hyperlinks-file-link-format = "idea://open?file={path}&line={line}"
     detect-dark-light = always
     diff-so-fancy = true
+    true-color = always
+
+[delta "diff-lines"]
+    side-by-side = true
+    hyperlinks = true
+    # hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+    hyperlinks-file-link-format = "idea://open?file={path}&line={line}"
+
 [core]
     excludesfile = ~/.gitignore
     pager = delta
     autocrlf = input
+
 [diff]
     colorMoved = default
+
 [merge]
     conflictstyle = zdiff3
+
 [interactive]
     diffFilter = delta --color-only
