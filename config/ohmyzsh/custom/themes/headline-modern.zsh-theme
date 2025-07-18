@@ -182,8 +182,8 @@ HL_TRUNC_REMOVAL=2
 
 
 # Prompt
-# HL_PROMPT='%(#.#.%(!.!.$)) ' # consider '%#'
-HL_PROMPT='%B%(#.#.%(!.!.$))%b ' # Bold prompt
+HL_PROMPT='%(#.#.%(!.!.$)) ' # consider '%#'
+# HL_PROMPT='%B%(#.#.%(!.!.$))%b ' # Bold prompt
 
 # Right prompt
 HL_RPROMPT=''
