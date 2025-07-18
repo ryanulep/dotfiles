@@ -115,9 +115,9 @@ HL_SPACE_CHAR=' '
 # Template for each segment's content
 declare -A HL_CONTENT_TEMPLATE=(
   USER   "%{$bold$red%} ..."
-  HOST   "%{$bold$yellow%} ..."
+  HOST   "%{$bold$yellow%} ..."
   VENV   "%{$bold$green%} ..."
-  PATH   "%{$bold$blue%} ..."
+  PATH   "%{$bold$blue%} ..."
   BRANCH "%{$bold$cyan%} ..."
   STATUS "%{$bold$magenta%}..."
 )
@@ -182,7 +182,7 @@ HL_TRUNC_REMOVAL=2
 
 
 # Prompt
-HL_PROMPT='%(#.#.%(!.!.$)) ' # consider '%#'
+HL_PROMPT='%(#.#.%(!.!.>)) ' # consider '%#'
 # HL_PROMPT='%B%(#.#.%(!.!.$))%b ' # Bold prompt
 
 # Right prompt
