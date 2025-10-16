@@ -6,7 +6,7 @@ if (( $+commands[lazygit] )); then
   alias lg='lazygit'
 fi
 
-# Include custom aliases
+# Include local aliases, if they exist
 if [[ -f ~/.aliases.local ]]; then
 	source ~/.aliases.local
 fi
