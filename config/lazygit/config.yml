@@ -8,7 +8,7 @@ gui:
   # Nerd fonts version to use.
   # One of: '2' | '3' | empty string (default)
   # If empty, do not show icons.
-  nerdFontsVersion: 3
+  nerdFontsVersion: "3"
 
   # How things are filtered when typing '/'.
   # One of 'substring' (default) | 'fuzzy'
@@ -33,14 +33,9 @@ gui:
       - white
 
 git:
-  # branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative \
-  # --pretty=format:'%C(auto)%h%d%C(reset) %s %C(blue)[%an]%C(reset) %C(green)%cr%C(reset)' \
-  # {{branchName}} --"
-
   pagers:
     # TODO: For some reason, this delta command is not working
     - pager: delta --line-numbers --hyperlinks --hyperlinks-file-link-format=lazygit-edit://{path}:{line}
-      useExternalDiffGitConfig: true
 
 # If true, exit Lazygit when the user presses escape in a context where there is
 # nothing to cancel/close
