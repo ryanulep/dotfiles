@@ -58,7 +58,6 @@ if ! zgenom saved; then
   # Shell enhancements
   zgenom ohmyzsh plugins/iterm2
   # zgenom ohmyzsh plugins/direnv  # Load and unload environment variables per directory
-  zgenom ohmyzsh plugins/thefuck  # Corrects mistyped commands
   zgenom ohmyzsh plugins/aliases  # Lists shortcuts available based on installed plugins
   zgenom ohmyzsh plugins/alias-finder  # Searches defined aliases and outputs any that match the command inputted
   zgenom ohmyzsh plugins/safe-paste  # Review what was actually pasted before running it
@@ -114,9 +113,6 @@ if ! zgenom saved; then
   lazyload nvm npm node -- 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
 
   # Execute commands which are dependent on the binaries being available
-  if (( $+commands[thefuck] )); then
-    zgenom eval --name wtf "$(thefuck --alias wtf)"
-  fi
   if (( $+commands[zoxide] )); then
     zgenom eval --name zoxide <<(zoxide init zsh --cmd cd)
   fi
