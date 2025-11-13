@@ -4,6 +4,7 @@ set backspace=2   " Backspace deletes like most programs in insert mode
 set history=1000
 set laststatus=2  " Always display the status line
 set showcmd       " Display incomplete commands
+set number        " Display line numbers
 
 
 " Change cursor to pipe for insert mode
