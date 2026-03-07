@@ -1,0 +1,24 @@
+[user]
+name = "Ryan Ulep"
+email = "ryan.ulep@gmail.com"
+
+# Disable pagination for `jj status`
+[[--scope]]
+--when.commands = ["status"]
+[--scope.ui]
+paginate = "never"
+
+# Use `delta` for `jj diff` and `jj show`
+[[--scope]]
+--when.commands = ["diff", "show"]
+[--scope.ui]
+pager = "delta"
+diff-formatter = ":git"
+
+[lazyjj]
+highlight-color = "white"
+diff-format = "git"
+diff-tool = "delta"
+bookmark-prefix = "push-"
+layout = "horizontal"
+layout-percent = 40
