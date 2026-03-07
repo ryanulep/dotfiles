@@ -32,10 +32,10 @@ gui:
     selectedLineBgColor:
       - white
 
-git:
-  pagers:
+# git:
+#   pagers:
     # TODO: For some reason, this delta command is not working
-    - pager: delta --line-numbers --hyperlinks --hyperlinks-file-link-format=lazygit-edit://{path}:{line}
+    # - pager: delta --line-numbers --hyperlinks --hyperlinks-file-link-format=lazygit-edit://{path}:{line}
 
 # If true, exit Lazygit when the user presses escape in a context where there is
 # nothing to cancel/close
