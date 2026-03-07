@@ -2,6 +2,13 @@
   path = ~/.gitconfig.local
   path = ~/.delta/themes.gitconfig
 
+[pull]
+  rebase = true
+
+[rebase]
+  # Helps if there are uncommitted changes when pulling
+  autoStash = true
+
 [delta]
     # Dark Themes: colibri, calochortus-lyallii, chameleon, mantis-shrimp
     # Light Themes: coracias-caudatus, hoopoe
