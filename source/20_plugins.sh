@@ -46,6 +46,8 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/github
   zgenom ohmyzsh plugins/tig
   zgenom load so-fancy/diff-so-fancy
+  zgenom load rkh/zsh-jj
+  zgenom load elithrar/zsh-git-to-jj
 
   # File management
   zgenom load raisedadead/zsh-touchplus  # create files with touch including the path
