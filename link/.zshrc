@@ -29,9 +29,10 @@ function dotfiles() {
   $DOTFILES/bin/dotfiles "$@" && src
 }
 
+# Skip compaudit security checks — compinit -u is safe on a personal machine
+# and avoids the ~85ms compaudit cost on every startup.
+ZSH_DISABLE_COMPFIX=true
+
 src
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local || true
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

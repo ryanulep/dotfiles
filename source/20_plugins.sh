@@ -1,5 +1,9 @@
 source "${HOME}/.zgenom/zgenom.zsh"
 
+# Tell zgenom not to add its own compinit call — Oh My Zsh already calls it.
+# This prevents the double-compinit that costs ~200ms on every startup.
+ZGEN_AUTOLOAD_COMPINIT=0
+
 ## Pre-work before loading plugins
 
 ZSH_WEB_SEARCH_ENGINES=(
@@ -37,7 +41,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/kubectl
   zgenom ohmyzsh plugins/kubectx
   zgenom ohmyzsh plugins/gcloud
-  zgenom ohmyzsh plugins/aws
+  # aws plugin removed: aws not installed, and its fallback calls `brew --prefix awscli` on every startup
   zgenom load Cloudstek/zsh-plugin-appup
 
   # Git plugins
