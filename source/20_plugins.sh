@@ -36,9 +36,9 @@ if ! zgenom saved; then
   zgenom load momo-lab/zsh-smartinput  # Inserts corresponding end character when brackets/quotes are inputted
 
   # Production environment management
-  # docker, docker-compose, kubectl, gcloud loaded lazily for being heavier.
-  zgenom ohmyzsh plugins/kubectx  # only provides kubectx_prompt_info for prompt themes
-  # aws plugin removed: aws not installed, and its fallback calls `brew --prefix awscli` on every startup
+  zgenom ohmyzsh plugins/docker  # Auto-completion and aliases for Docker
+  zgenom ohmyzsh plugins/docker-compose
+  zgenom ohmyzsh plugins/kubectl
   zgenom load Cloudstek/zsh-plugin-appup
 
   # Git plugins
@@ -81,6 +81,7 @@ if ! zgenom saved; then
   # Productivity
   zgenom ohmyzsh plugins/web-search  # Search the web from the command line
   zgenom ohmyzsh plugins/jsontools  # Handling JSON data
+  zgenom ohmyzsh plugins/bazel  # Bazel build system support
   
   # Core Zsh plugins
   zgenom load jandamm/zgenom-ext-eval  # Quickly generate plugins from a command or heredoc.
@@ -124,23 +125,7 @@ if ! zgenom saved; then
   # executed every 7 days.
 fi
 
-# Lazy load heavy/infra plugins — sourced only when a trigger command is first used.
-# This block runs every startup (outside the save block) so stubs are always registered.
-# Completions for these plugins are pre-registered via fpath in 10_completions.sh;
-# docker and kubectl completions are cached by OMZ in $ZSH_CACHE_DIR/completions/.
-_OMZ="${HOME}/.dotfiles/link/.zgenom/sources/ohmyzsh/ohmyzsh/___/plugins"
-
-lazyload docker                         -- "source '${_OMZ}/docker/docker.plugin.zsh'"
-lazyload docker-compose dco             -- "source '${_OMZ}/docker-compose/docker-compose.plugin.zsh'"
-lazyload kubectl k                      -- "source '${_OMZ}/kubectl/kubectl.plugin.zsh'"
-lazyload gcloud                         -- "source '${_OMZ}/gcloud/gcloud.plugin.zsh'"
-lazyload gradle                         -- "source '${_OMZ}/gradle/gradle.plugin.zsh'"
-lazyload bazel                          -- "source '${_OMZ}/bazel/bazel.plugin.zsh'"
-[[ "$(uname -s)" == "Darwin" ]] && \
-  lazyload xc xcb xcdd xcp xcsel xcselv -- "source '${_OMZ}/xcode/xcode.plugin.zsh'"
-
+# Lazy load plugins which are not needed at startup
 # SDK and NVM — must be outside the save block to run every startup
-lazyload sdk                            -- 'export SDKMAN_DIR="$HOME/.sdkman" && source "$HOME/.sdkman/bin/sdkman-init.sh"'
-lazyload nvm npm node                   -- 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
-
-unset _OMZ
+lazyload sdk -- 'export SDKMAN_DIR="$HOME/.sdkman" && source "$HOME/.sdkman/bin/sdkman-init.sh"'
+lazyload nvm npm node -- 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
