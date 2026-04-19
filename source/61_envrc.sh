@@ -1,7 +1,11 @@
 ## Bat (https://github.com/sharkdp/bat)
-export BAT_CONFIG_PATH="$HOME/.config/bat/config"
-# If delta is installed, use delta by default.
-BATDIFF_USE_DELTA=true
+if (( $+commands[bat] )); then
+  export BAT_CONFIG_PATH="$HOME/.config/bat/config"
+fi
+if (( $+commands[delta] )); then
+  # If delta is installed, use delta by default.
+  BATDIFF_USE_DELTA=true
+fi
 
 # Export XDG_CONFIG_HOME -> ~/.config only if it's not already set
 if (( ! ${+XDG_CONFIG_HOME} )); then

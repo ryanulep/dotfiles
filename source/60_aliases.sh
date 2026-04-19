@@ -1,5 +1,9 @@
-## For a full list of active aliases, run `alias`.
-command -v bat >/dev/null 2>&1 && alias cat='bat --style plain --paging=never'
+## For a full list of active aliases, run `alias | fzf`.
+
+# Alias cat only if bat is installed
+if (( $+commands[bat] )); then
+  alias cat='bat --style plain --paging=never'
+fi
 
 # Alias lg -> lazygit only if it's installed
 if (( $+commands[lazygit] )); then
