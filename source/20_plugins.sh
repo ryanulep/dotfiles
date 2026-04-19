@@ -45,9 +45,15 @@ if ! zgenom saved; then
   zgenom load momo-lab/zsh-smartinput    # Inserts corresponding end character when brackets/quotes are inputted
 
   # Production environment management
-  zgenom ohmyzsh plugins/docker    # Auto-completion and aliases for Docker
-  zgenom ohmyzsh plugins/docker-compose
-  zgenom ohmyzsh plugins/kubectl
+  if (( $+commands[docker] )); then
+    zgenom ohmyzsh plugins/docker    # Auto-completion and aliases for Docker
+  fi
+  if (( $+commands[docker-compose] )); then
+    zgenom ohmyzsh plugins/docker-compose
+  fi
+  if (( $+commands[kubectl] )); then
+    zgenom ohmyzsh plugins/kubectl
+  fi
   zgenom load Cloudstek/zsh-plugin-appup
 
   # Git plugins
