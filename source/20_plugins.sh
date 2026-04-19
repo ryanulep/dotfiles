@@ -72,7 +72,11 @@ if ! zgenom saved; then
 
   # Aliases
   zgenom ohmyzsh plugins/common-aliases    # Creates helpful shortcut aliases for many commonly used commands
-  zgenom load djui/alias-tips  # Warns you when you have an alias for the command you just typed
+  zgenom ohmyzsh plugins/alias-finder    # Creates helpful shortcut aliases for many commonly used commands
+  zstyle ':omz:plugins:alias-finder' autoload yes
+  zstyle ':omz:plugins:alias-finder' longer yes
+  zstyle ':omz:plugins:alias-finder' exact yes
+  zstyle ':omz:plugins:alias-finder' cheaper yes
   zgenom load brymck/print-alias    # Prints commands with aliases expanded on the CLI
 
   # Shell enhancements
