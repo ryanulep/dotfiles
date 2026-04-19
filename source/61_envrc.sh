@@ -17,4 +17,6 @@ export TIMER_THRESHOLD=2
 # To opt in to Homebrew analytics, `unset` this in ~/.zshrc.local .
 export HOMEBREW_NO_ANALYTICS=1
 
-[[ -f ~/.zshenv.local ]] && source ~/.zshenv.local || true
+if [[ -f ~/.zshenv.local ]]; then
+	source ~/.zshenv.local
+fi

@@ -35,4 +35,6 @@ ZSH_DISABLE_COMPFIX=true
 
 src
 
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local || true
+if [[ -f ~/.zshenv.local ]]; then
+	source ~/.zshenv.local
+fi
