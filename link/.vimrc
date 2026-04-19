@@ -1,11 +1,19 @@
 set encoding=utf-8
 
-set backspace=2   " Backspace deletes like most programs in insert mode
+set backspace=2               " Backspace deletes like most programs in insert mode
 set history=1000
-set laststatus=2  " Always display the status line
-set showcmd       " Display incomplete commands
-set number        " Display line numbers
+set laststatus=2              " Always display the status line
+set showcmd                   " Display incomplete commands
+set relativenumber number     " Displays both absolute and relative line numbers                   " Display line numbers
+set autoindent smartindent    " auto/smart indent
+set smarttab                  " tab and backspace are smart
+set ruler                     " show the line number on the bar
 
+set shell=zsh
+filetype on                   " Enable filetype detection
+filetype indent on            " Enable filetype-specific indenting
+filetype plugin on            " Enable filetype-specific plugins
+syntax on                    " Enable syntax highlighting for known filetypes
 
 " Change cursor to pipe for insert mode
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
