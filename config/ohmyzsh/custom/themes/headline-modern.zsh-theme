@@ -210,7 +210,8 @@ HL_ERR_DETAIL_TEMPLATE=' (...)'
 
 
 # Print separator and information line with precmd hook or in PROMPT
-HL_PRINT_MODE='prompt' # precmd|prompt
+# Needs to be 'precmd' to avoid the terminal rendering issue with Tab.
+HL_PRINT_MODE='precmd' # precmd|prompt
 
 # Print the separator line always, when not following clear screen, or don't print
 HL_SEP_MODE='auto' # on|auto|off
