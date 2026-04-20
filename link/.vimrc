@@ -1,19 +1,20 @@
 set encoding=utf-8
 
-set backspace=2               " Backspace deletes like most programs in insert mode
+set backspace=indent,eol,start " Backspace deletes like most programs in insert mode
 set history=1000
 set laststatus=2              " Always display the status line
 set showcmd                   " Display incomplete commands
-set relativenumber number     " Displays both absolute and relative line numbers                   " Display line numbers
-set autoindent smartindent    " auto/smart indent
-set smarttab                  " tab and backspace are smart
-set ruler                     " show the line number on the bar
+set relativenumber number     " Displays both absolute and relative line numbers
+set autoindent                " Auto indent (smartindent is deprecated; filetype indent handles it)
+set smarttab                  " Tab and backspace are smart
+set ruler                     " Show line and column number in status bar
+set scrolloff=8               " Keep 8 lines of context around the cursor
 
 set shell=zsh
 filetype on                   " Enable filetype detection
 filetype indent on            " Enable filetype-specific indenting
 filetype plugin on            " Enable filetype-specific plugins
-syntax on                    " Enable syntax highlighting for known filetypes
+syntax on                     " Enable syntax highlighting
 
 " Change cursor to pipe for insert mode
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -26,20 +27,33 @@ set shiftwidth=2
 set shiftround
 set expandtab
 
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (empty($TMUX))
-  if (has("nvim"))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
-    set termguicolors
-  endif
+" Search
+set incsearch                 " Highlight matches as you type
+set hlsearch                  " Highlight all matches
+set ignorecase                " Case-insensitive search...
+set smartcase                 " ...unless the query contains uppercase
+
+" Files and buffers
+set hidden                    " Allow switching buffers without saving
+set autoread                  " Reload files changed outside vim
+set clipboard=unnamed         " Yank/paste to/from system clipboard
+set updatetime=300            " Faster swap writes and plugin responsiveness (default 4000ms)
+
+" Persistent undo across sessions
+set undofile
+set undodir=~/.vim/undo
+
+" Command-line completion
+set wildmenu                  " Enhanced command-line completion
+set wildmode=list:longest     " Complete to longest common match, then list
+
+" Splits open in a more natural direction
+set splitbelow
+set splitright
+
+" True color support (works inside tmux with: set -g default-terminal "tmux-256color")
+if has("termguicolors")
+  set termguicolors
 endif
 
 " Local config
