@@ -43,6 +43,9 @@ export FZF_CTRL_R_OPTS='
 # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+# --style full (inherited via use-fzf-default-opts) consumes ~7 lines of chrome;
+# add extra vertical padding so the popup is tall enough to show all matches.
+zstyle ':fzf-tab:*' popup-pad 0 6
 zstyle ":completion:*:git-checkout:*" sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
