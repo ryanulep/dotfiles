@@ -6,6 +6,13 @@ return {
     name = "catppuccin",
     priority = 1000,
     opts = {
+      custom_highlights = function(colors)
+        return {
+          LineNr      = { fg = colors.subtext0 },
+          LineNrAbove = { fg = colors.surface2 },
+          LineNrBelow = { fg = colors.surface2 },
+        }
+      end,
       integrations = {
         treesitter = true,
         gitsigns = true,
