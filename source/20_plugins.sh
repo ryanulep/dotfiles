@@ -63,17 +63,17 @@ if ! zgenom saved; then
     zgenom ohmyzsh plugins/tig
   fi
   if (( $+commands[bat] )); then
-    # Use diff-so-fancy for git diffs if bat is available for better syntax highlighting and formatting
+    # Use diff-so-fancy for better syntax highlighting and formatting
+    # Only works if bat is installed
     zgenom load so-fancy/diff-so-fancy
   fi
 
   # File management / navigation
   zgenom load raisedadead/zsh-touchplus     # create files with touch including the path
   zgenom ohmyzsh plugins/extract    # Extract compressed files
-  # zgenom ohmyzsh plugins/colorize     # Provides syntax highlighting for files
-  export ZOXIDE_CMD_OVERRIDE=cd    # Override the default cd command with zoxide's functionality
-  zgenom ohmyzsh plugins/zoxide     # Smarter cd command
-  # zgenom ohmyzsh plugins/last-working-dir    # Automatically jump into last used working directory for new shells
+  if (( $+commands[zoxide] )); then
+    zgenom eval --name zoxide <<(zoxide init zsh --cmd cd)
+  fi
   zgenom load toku-sa-n/zsh-dot-up    # Quickly navigate up directories in the file system
 
   # Aliases
