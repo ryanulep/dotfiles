@@ -1,5 +1,4 @@
 export FZF_DEFAULT_OPTS='
-  --tmux 90%
   --style full
   --input-label " Input "
   --bind "result:transform-list-label:
@@ -30,6 +29,7 @@ export FZF_CTRL_T_OPTS="
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 # CTRL-Y to copy the command into clipboard using pbcopy
 export FZF_CTRL_R_OPTS='
+  --tmux 90%
   --height 60%
   --style full
   --multi
