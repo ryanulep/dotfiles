@@ -42,15 +42,32 @@ export FZF_CTRL_R_OPTS='
 # To make fzf-tab follow FZF_DEFAULT_OPTS.
 # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
-zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-# --style full (inherited via use-fzf-default-opts) consumes ~7 lines of chrome;
-# add extra vertical padding so the popup is tall enough to show all matches.
-zstyle ':fzf-tab:*' popup-pad 0 6
+function _fzf_tab_resize() {
+    local width
+    local -a flags=('--preview-window=right:50%')
+    if [[ -n "$TMUX" ]]; then
+        width=$(tmux display-message -p '#{window_width}')
+        zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+    else
+        width=$COLUMNS
+        zstyle ':fzf-tab:*' fzf-command fzf
+        flags+=('--height=33%')
+    fi
+    zstyle ':fzf-tab:*' fzf-flags $flags
+    local popup_width=$(( width * 3 / 4 ))
+    (( popup_width < 80 )) && popup_width=80
+    zstyle ':fzf-tab:*' popup-min-size $popup_width 15
+}
+_fzf_tab_resize
+add-zsh-hook precmd _fzf_tab_resize
 zstyle ":completion:*:git-checkout:*" sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':fzf-tab:*' continuous-trigger 'tab'
+zstyle ':fzf-tab:complete:man:*' fzf-preview 'man $word | col -bx | bat --language=man --color=always --paging=never'
 zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
 	fzf-preview 'echo ${(P)word}'
+zstyle ':fzf-tab:complete:*:*' fzf-preview 'fzf-tab-preview $realpath'
 
 if [[ ! -z "$DEVPOD_NAME" ]]; then
     # Install latest version on devpod

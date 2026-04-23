@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+realpath="$1"
+
+[[ -z "$realpath" ]] && exit 0
+
+if [[ -d "$realpath" ]]; then
+    tree -C -L 1 -I '.git' -s -h "$realpath" \
+        | perl -e '
+            use utf8; binmode(STDIN, ":utf8"); binmode(STDOUT, ":utf8");
+            my @lines; my $max = 0;
+            while (<STDIN>) {
+                s/\[ *(\d+)\]/[$1B]/g;
+                push @lines, $_;
+                $max = length($1) if /(\[\S+\])/ && length($1) > $max;
+            }
+            for (@lines) {
+                s/(\[\S+\])/$1 . " " x ($max - length($1))/e;
+                print;
+            }'
+elif [[ -f "$realpath" ]]; then
+    case "$realpath" in
+        *.(jpg|jpeg|png|gif|bmp|webp|svg|ico))
+            chafa "$realpath"
+            ;;
+        *.json|*.jsonc)
+            jq --color-output . "$realpath" 2>/dev/null \
+                || bat --color=always --paging=never "$realpath"
+            ;;
+        *)
+            bat --color=always --paging=never "$realpath" 2>/dev/null
+            ;;
+    esac
+fi
