@@ -5,6 +5,11 @@ if (( $+commands[bat] )); then
   alias cat='bat --style plain --paging=never'
 fi
 
+# Alias vim only if neovim is installed
+if (( $+commands[nvim] )); then
+  alias vim='nvim'
+fi
+
 # Alias lg -> lazygit only if it's installed
 if (( $+commands[lazygit] )); then
   alias lg='lazygit'
