@@ -18,7 +18,7 @@ require("lazy").setup({
   spec = {
     -- LazyVim extras must be imported before custom plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    { import = "lazyvim.plugins.extras.lang.go" },
+    { import = "lazyvim.plugins.extras.lang.go", cond = vim.fn.executable("go") == 1 },
     { import = "lazyvim.plugins.extras.lang.java" },
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.kotlin" },
