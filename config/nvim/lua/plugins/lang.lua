@@ -11,6 +11,8 @@ return {
         "buildifier",
         "mdformat",
         "kotlin-lsp",
+        "starpls",
+        "buf",
       },
     },
   },
@@ -26,6 +28,8 @@ return {
         kotlin_lsp = {
           cmd = { vim.fn.stdpath("data") .. "/mason/bin/intellij-server", "--stdio" },
         },
+        starpls = {},
+        buf_ls = {},
       },
       -- Configured here rather than options.lua so it runs after LazyVim's own
       -- diagnostic setup and isn't overwritten
@@ -42,7 +46,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      ensure_installed = { "starlark" },
+      ensure_installed = { "starlark", "proto" },
     },
   },
 
@@ -54,6 +58,7 @@ return {
         kotlin = { "ktfmt" },  -- overrides ktlint set by the kotlin extra
         bzl = { "buildifier" },
         markdown = { "mdformat" },
+        proto = { "buf" },
       },
     },
   },
