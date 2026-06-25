@@ -4,6 +4,3 @@
 vim.opt.scrolloff = 2
 vim.opt.shell = "zsh"
 vim.opt.statuscolumn = "%#LineNr#%4{v:lnum}%*  %#LineNrAbove#%2{v:relnum}%* "
-
--- Switch Python LSP to basedpyright (community fork, current LazyVim recommendation)
-vim.g.lazyvim_python_lsp = "basedpyright"

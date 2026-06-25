@@ -1,5 +1,5 @@
--- Language support for Java, Kotlin, Python, Starlark, Markdown, and plaintext.
--- LazyVim extras (java, python, markdown) are imported in lazy.lua in the correct order.
+-- Language support for Java, Kotlin, Starlark, Markdown, and plaintext.
+-- LazyVim extras (java, kotlin, markdown) are imported in lazy.lua in the correct order.
 
 return {
   {
@@ -10,7 +10,6 @@ return {
         "ktfmt",
         "buildifier",
         "mdformat",
-        "debugpy",
         "kotlin-lsp",
       },
     },
@@ -20,9 +19,13 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        -- Use JetBrains kotlin_lsp instead of the community kotlin_language_server
+        -- Use JetBrains kotlin_lsp instead of the community kotlin_language_server.
+        -- The Mason `kotlin-lsp` package symlinks its binary as `intellij-server`
+        -- (not `kotlin-lsp`), so nvim-lspconfig's default cmd would fail to launch.
         kotlin_language_server = { enabled = false },
-        kotlin_lsp = {},
+        kotlin_lsp = {
+          cmd = { vim.fn.stdpath("data") .. "/mason/bin/intellij-server", "--stdio" },
+        },
       },
       -- Configured here rather than options.lua so it runs after LazyVim's own
       -- diagnostic setup and isn't overwritten
@@ -51,32 +54,6 @@ return {
         kotlin = { "ktfmt" },  -- overrides ktlint set by the kotlin extra
         bzl = { "buildifier" },
         markdown = { "mdformat" },
-      },
-    },
-  },
-
-  -- Python debugger; debugpy itself is installed via Mason above
-  {
-    "mfussenegger/nvim-dap-python",
-    dependencies = "mfussenegger/nvim-dap",
-    ft = "python",
-    config = function()
-      local debugpy = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
-      require("dap-python").setup(debugpy)
-    end,
-  },
-
-  -- Python test runner via pytest (<leader>tt / <leader>tr)
-  -- Java uses the jdtls built-in runner with the same keymaps (buffer-local, takes precedence)
-  {
-    "nvim-neotest/neotest",
-    dependencies = { "nvim-neotest/neotest-python" },
-    opts = {
-      adapters = {
-        ["neotest-python"] = {
-          dap = { justMyCode = false },
-          runner = "pytest",
-        },
       },
     },
   },
