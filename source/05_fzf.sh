@@ -1,3 +1,8 @@
+# Use fd when available — respects .gitignore, faster than find
+if (( $+commands[fd] )); then
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+fi
+
 export FZF_DEFAULT_OPTS='
   --style full
   --input-label " Input "

@@ -4,3 +4,6 @@ backups/
 .DS_STORE
 link/.tmux/plugins/*
 config/jj/repos/
+**/__pycache__/
+**/*.pyc
+**/__init__.py

@@ -95,8 +95,10 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/copybuffer    # Copy the contents of buffer to the clipboard using Ctrl + "O"
   zgenom ohmyzsh plugins/copypath    # Copies the path of given directory or file to the system clipboard
   zgenom ohmyzsh plugins/timer    # Timer plugin to measure the time it takes to run a command
-  ## IMPORTANT: zsh-dot-up has to be loaded before zsh-syntax-highlighting
-  zgenom load zsh-users/zsh-syntax-highlighting    # Provides CLI syntax highlighting
+  # history-substring-search must load before fast-syntax-highlighting
+  zgenom load zsh-users/zsh-history-substring-search    # Up/down arrows search history by typed prefix
+  ## IMPORTANT: zsh-dot-up has to be loaded before fast-syntax-highlighting
+  zgenom load zdharma-continuum/fast-syntax-highlighting    # Faster CLI syntax highlighting with more features
 
   # Productivity
   # zgenom ohmyzsh plugins/web-search    # Search the web from the command line

@@ -16,9 +16,13 @@ SAVEHIST=$HISTSIZE
 
 HISTORY_IGNORE='(l|ls|ll|la)( * )|cd|cd( * )|pwd|exit|date|history( * )|clear|reset|tmux( * )|(lg|lazygit|tig)|git (status|diff|log)( * )|jj (st|status|diff|log|show|obslog|evolog)( * )|jj bookmark list( * )|jj git remote list( * )'
 
-ZSH_AUTOSUGGEST_STRATEGY=(history)
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+
+# history-substring-search: up/down arrows search history by typed prefix
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 export ERL_AFLAGS="-kernel shell_history enabled"
 
