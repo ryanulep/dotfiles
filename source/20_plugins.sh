@@ -71,9 +71,8 @@ if ! zgenom saved; then
   # File management / navigation
   zgenom load raisedadead/zsh-touchplus     # create files with touch including the path
   zgenom ohmyzsh plugins/extract    # Extract compressed files
-  if (( $+commands[zoxide] )); then
-    zgenom eval --name zoxide <<(zoxide init zsh --cmd cd)
-  fi
+  # NOTE: zoxide is initialized in 80_zoxide.sh — it must run AFTER every plugin
+  # that hooks chpwd_functions, or zoxide's doctor warns on every shell start.
   zgenom load toku-sa-n/zsh-dot-up    # Quickly navigate up directories in the file system
 
   # Aliases
