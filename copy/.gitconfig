@@ -22,9 +22,7 @@
     defaultBranch = main
 
 [delta]
-    # Dark Themes: colibri, calochortus-lyallii, chameleon, mantis-shrimp
-    # Light Themes: coracias-caudatus, hoopoe
-    features = hoopoe diff-lines
+    features = catppuccin-latte catppuccin-mocha diff-lines
     navigate = true  # use n and N to move between diff sections
     detect-dark-light = always
     diff-so-fancy = true

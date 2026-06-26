@@ -1,7 +1,7 @@
 # Set the theme based on terminal colors
 --theme="auto:system"
---theme-light="OneHalfLight"
---theme-dark="OneHalfDark"
+--theme-light="Catppuccin Latte"
+--theme-dark="Catppuccin Mocha"
 
 # Show line numbers, Git modifications and file header (but no grid)
 --style="numbers,changes,header"
