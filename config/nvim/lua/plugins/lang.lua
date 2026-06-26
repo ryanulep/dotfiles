@@ -1,5 +1,5 @@
--- Language support for Java, Kotlin, Starlark, Markdown, and plaintext.
--- LazyVim extras (java, kotlin, markdown) are imported in lazy.lua in the correct order.
+-- Language support beyond what LazyVim extras cover.
+-- Extras (go, java, kotlin, typescript, markdown, yaml, json, git) are imported in lazy.lua.
 
 return {
   {
@@ -42,11 +42,11 @@ return {
     },
   },
 
-  -- Starlark treesitter parser (no LazyVim extra exists for it)
+  -- Treesitter parsers not covered by any LazyVim extra
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      ensure_installed = { "starlark", "proto" },
+      ensure_installed = { "starlark", "proto", "python", "cpp" },
     },
   },
 
