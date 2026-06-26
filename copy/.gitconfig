@@ -22,14 +22,24 @@
     defaultBranch = main
 
 [delta]
-    features = catppuccin-latte catppuccin-mocha diff-lines
+    features = diff-lines
     navigate = true  # use n and N to move between diff sections
+    # +/- colors and syntax theme are queried from the terminal background on
+    # every run, so they stay soft and switch automatically light<->dark.
+    # Using delta defaults (not the catppuccin themes) keeps the filename in a
+    # single header per file instead of repeating it in every hunk header.
     detect-dark-light = always
-    diff-so-fancy = true
     true-color = always
+    # Full-width yellow band above & below the single file header (ANSI yellow
+    # adapts to the terminal palette, so it stays correct in light and dark).
+    file-style = "yellow bold"
+    file-decoration-style = "yellow ol ul"
+    # Drop the per-hunk header entirely; hunks are separated by a blank line.
+    hunk-header-style = omit
 
 [delta "diff-lines"]
     side-by-side = true
+    line-numbers = true
     hyperlinks = true
     # hyperlinks-file-link-format = "vscode://file/{path}:{line}"
     hyperlinks-file-link-format = "idea://open?file={path}&line={line}"
