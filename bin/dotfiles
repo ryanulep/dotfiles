@@ -501,6 +501,13 @@ elif [[ "$1" != "restart" ]]; then
   fi
 fi
 
+# Keep the zgenom submodule on its tracking branch. `git submodule update`
+# leaves submodules in detached HEAD, so zgenom's autoupdate `git pull` fails
+# with "not on a branch" and wipes/rebuilds its cache on every terminal open.
+if [[ -d "$DOTFILES/link/.zgenom" ]]; then
+  git -C "$DOTFILES/link/.zgenom" checkout -q main 2>/dev/null || true
+fi
+
 # Add binaries into the path
 [[ -d $DOTFILES/bin ]] && export PATH=$DOTFILES/bin:$PATH
 
