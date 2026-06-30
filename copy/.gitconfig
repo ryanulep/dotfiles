@@ -44,6 +44,10 @@
     # hyperlinks-file-link-format = "vscode://file/{path}:{line}"
     hyperlinks-file-link-format = "idea://open?file={path}&line={line}"
 
+[delta "lazygit"]
+    # lazygit's diff pane is too narrow for side-by-side; override diff-lines
+    side-by-side = false
+
 [core]
     excludesfile = ~/.gitignore
     pager = delta

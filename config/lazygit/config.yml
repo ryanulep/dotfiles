@@ -34,7 +34,12 @@ gui:
 
 git:
   pagers:
-    - pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+    - # delta's detect-dark-light queries the terminal background via OSC 11,
+      # but that signal can't round-trip through tmux's subprocess boundary.
+      # Instead, read COLORFGBG (set by iTerm2, inherited by tmux): last
+      # segment >=8 means light background. The value must be YAML
+      # double-quoted so the YAML parser doesn't mangle ${...} and '...'.
+      pager: "sh -c '_b=${COLORFGBG##*;}; [ \"${_b:-0}\" -ge 8 ] && _m=--light || _m=--dark; exec delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format=\"lazygit-edit://{path}:{line}\" --features \"diff-lines lazygit\" $_m'"
       colorArg: always
 
 # If true, exit Lazygit when the user presses escape in a context where there is
