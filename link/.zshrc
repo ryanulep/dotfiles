@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 export DOTFILES="$HOME/.dotfiles"
 export ZSH_CUSTOM=$DOTFILES/config/ohmyzsh/custom
 
@@ -34,7 +32,3 @@ function dotfiles() {
 ZSH_DISABLE_COMPFIX=true
 
 src
-
-if [[ -f ~/.zshenv.local ]]; then
-	source ~/.zshenv.local
-fi
