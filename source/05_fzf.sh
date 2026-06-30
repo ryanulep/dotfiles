@@ -24,8 +24,6 @@ export FZF_DEFAULT_OPTS='
   --color "header-border:3,header:11,header-label:11"
   --color "hl+:2,hl:10"
   --bind "ctrl-o:execute(code {})+abort"'
-# To apply the command to CTRL-T as well
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="
   --height ~80%
   --style full
