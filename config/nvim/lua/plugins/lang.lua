@@ -35,6 +35,8 @@ return {
       -- diagnostic setup and isn't overwritten
       diagnostics = {
         virtual_text = false,
+        -- Show diagnostic below the current line only; cleaner than inline text
+        virtual_lines = { current_line = true },
         signs = true,
         underline = true,
         update_in_insert = false,
@@ -46,7 +48,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      ensure_installed = { "starlark", "proto", "python", "cpp" },
+      ensure_installed = { "starlark", "proto", "python", "cpp", "go" },
     },
   },
 
