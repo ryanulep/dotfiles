@@ -14,7 +14,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=290000
 SAVEHIST=$HISTSIZE
 
-HISTORY_IGNORE='(l|ls|ll|la)( * )|cd|cd( * )|pwd|exit|date|history( * )|clear|reset|tmux( * )|(lg|lazygit|tig)|git (status|diff|log)( * )|jj (st|status|diff|log|show|obslog|evolog)( * )|jj bookmark list( * )|jj git remote list( * )'
+HISTORY_IGNORE='(l|ls|ll|la)( * )|cd|cd( * )|pwd|exit|date|history( * )|clear|reset|tmux( * )|(lg|lazygit|tig)|git (status|diff|log)( * )|jj (st|status|diff|log|show|obslog|evolog)( * )|jj bookmark list( * )|jj git remote list( * )|(nvim|vim|ranger|bat|cat)|(nvim|vim|ranger|bat|cat)( * )'
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
