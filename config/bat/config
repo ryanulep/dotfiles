@@ -8,8 +8,9 @@
 
 # Map non-standard file extensions to syntaxes
 --map-syntax ".bzl:Python"
---map-syntax ".bazel:Python"
---map-syntax "BUILD.bazel:Python"
+--map-syntax "*.bazel:Python"
+--map-syntax "BUILD:Python"
 --map-syntax "WORKSPACE:Python"
+--map-syntax "*.bzlmod:Python"
 --map-syntax ".bazelrc:Bourne Again Shell (bash)"
 --map-syntax "METADATA:YAML"
