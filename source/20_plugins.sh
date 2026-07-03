@@ -39,7 +39,8 @@ if ! zgenom saved; then
   zgenom load zsh-users/zsh-completions    # Additional completion definitions for
 
   # Completions
-  zgenom load unixorn/fzf-zsh-plugin   # fzf shell integration (superset of ohmyzsh fzf plugin)
+  zgenom load unixorn/fzf-zsh-plugin
+  zgenom ohmyzsh plugins/fzf
   zgenom load aloxaf/fzf-tab
   zgenom load momo-lab/zsh-smartinput    # Inserts corresponding end character when brackets/quotes are inputted
 
