@@ -32,3 +32,7 @@ function dotfiles() {
 ZSH_DISABLE_COMPFIX=true
 
 src
+
+if [[ -f ~/.zshrc.local ]]; then
+	source ~/.zshrc.local
+fi
