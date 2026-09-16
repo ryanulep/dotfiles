@@ -3,4 +3,6 @@
 
 vim.opt.scrolloff = 2
 vim.opt.shell = "zsh"
-vim.opt.statuscolumn = "%#LineNr#%4{v:lnum}%*  %#LineNrAbove#%2{v:relnum}%* "
+-- Keep the absolute/relative number layout, plus diagnostic/Git signs and folds.
+-- Omitting %s hides errors even when diagnostics.signs is enabled.
+vim.opt.statuscolumn = "%s%C%#LineNr#%4{v:lnum}%*  %#LineNrAbove#%2{v:relnum}%* "
