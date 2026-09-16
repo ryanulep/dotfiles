@@ -4,6 +4,14 @@ source "${HOME}/.zgenom/zgenom.zsh"
 # This prevents the double-compinit that costs ~200ms on every startup.
 ZGEN_AUTOLOAD_COMPINIT=0
 
+# Rebuild the saved plugin list when this file changes. Runtime settings below
+# must still run on cached starts: zgenom save records source files, not zstyles.
+ZGEN_RESET_ON_CHANGE=("$DOTFILES/source/20_plugins.sh")
+zstyle ':omz:plugins:alias-finder' autoload yes
+zstyle ':omz:plugins:alias-finder' longer yes
+zstyle ':omz:plugins:alias-finder' exact yes
+zstyle ':omz:plugins:alias-finder' cheaper yes
+
 ## Pre-work before loading plugins
 
 ZSH_WEB_SEARCH_ENGINES=(
@@ -78,10 +86,6 @@ if ! zgenom saved; then
   # Aliases
   zgenom ohmyzsh plugins/common-aliases    # Creates helpful shortcut aliases for many commonly used commands
   zgenom ohmyzsh plugins/alias-finder    # Creates helpful shortcut aliases for many commonly used commands
-  zstyle ':omz:plugins:alias-finder' autoload yes
-  zstyle ':omz:plugins:alias-finder' longer yes
-  zstyle ':omz:plugins:alias-finder' exact yes
-  zstyle ':omz:plugins:alias-finder' cheaper yes
   zgenom load brymck/print-alias    # Prints commands with aliases expanded on the CLI
 
   # Shell enhancements
@@ -130,5 +134,11 @@ fi
 
 # Lazy load plugins which are not needed at startup
 # SDK and NVM — must be outside the save block to run every startup
-lazyload sdk -- 'export SDKMAN_DIR="$HOME/.sdkman" && source "$HOME/.sdkman/bin/sdkman-init.sh"'
-lazyload nvm npm node -- 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
+export SDKMAN_DIR="${SDKMAN_DIR:-$HOME/.sdkman}"
+if [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]]; then
+  lazyload sdk -- 'source "$SDKMAN_DIR/bin/sdkman-init.sh"'
+fi
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+  lazyload nvm npm node -- 'source "$NVM_DIR/nvm.sh"'
+fi
