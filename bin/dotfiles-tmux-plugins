@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Install every missing TPM dependency, then load the completed configuration.
+set -euo pipefail
+dotfiles_root="${DOTFILES:-$HOME/.dotfiles}"
+plugin_dir="${TMUX_PLUGIN_MANAGER_PATH:-$HOME/.tmux/plugins/}"
+tmux_conf="${TMUX_CONF:-$HOME/.tmux.conf}"
+
+command -v tmux >/dev/null || { echo 'Install tmux first.' >&2; exit 1; }
+if [[ ! -x "$plugin_dir/tpm/bin/install_plugins" ]]; then
+  git -C "$dotfiles_root" submodule update --init --recursive link/.tmux/plugins/tpm
+fi
+# This works with an existing server or starts one without opening a shell.
+tmux start-server \; set-environment -g TMUX_PLUGIN_MANAGER_PATH "${plugin_dir%/}/"
+"$plugin_dir/tpm/bin/install_plugins"
+tmux source-file "$tmux_conf"
+printf 'All declared tmux plugins installed and configuration reloaded.\n'
