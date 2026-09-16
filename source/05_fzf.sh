@@ -1,6 +1,12 @@
 # Use fd when available — respects .gitignore, faster than find
-if (( $+commands[fd] )); then
-  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+if (( $+commands[fd] || $+commands[fdfind] )); then
+  # Debian packages fd as fdfind. Avoid following generated Bazel symlink trees.
+  _dotfiles_fd=${commands[fd]:-${commands[fdfind]}}
+  export FZF_DEFAULT_COMMAND="${(q)_dotfiles_fd} --type f --hidden --exclude .git"
+  # Current fzf widgets do not inherit FZF_DEFAULT_COMMAND.
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="${(q)_dotfiles_fd} --type d --hidden --exclude .git"
+  unset _dotfiles_fd
 fi
 
 export FZF_DEFAULT_OPTS='
@@ -22,14 +28,17 @@ export FZF_DEFAULT_OPTS='
   --color "prompt:12,info:5"
   --color "spinner:5,pointer:9"
   --color "header-border:3,header:11,header-label:11"
-  --color "hl+:2,hl:10"
-  --bind "ctrl-o:execute(code {})+abort"'
+  --color "hl+:2,hl:10"'
 export FZF_CTRL_T_OPTS="
   --height ~80%
   --style full
-  --preview 'fzf-preview.sh {}'
+  --preview 'fzf-tab-preview {}'
   --walker-skip .git,node_modules,target
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+if (( $+commands[code] )); then
+  # Opening an editor only makes sense for file selections, not history/sessions.
+  FZF_CTRL_T_OPTS+=" --bind 'ctrl-o:execute(code -- {})+abort'"
+fi
 # CTRL-Y to copy the command into clipboard using pbcopy
 export FZF_CTRL_R_OPTS='
   --tmux 90%
@@ -42,23 +51,27 @@ export FZF_CTRL_R_OPTS='
   --header "Press CTRL-Y to copy the command into the clipboard"'
 
 # fzf-tab
-# To make fzf-tab follow FZF_DEFAULT_OPTS.
+# Keep fzf-tab's layout independent of global picker options.
 # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
-zstyle ':fzf-tab:*' use-fzf-default-opts yes
+zstyle ':fzf-tab:*' use-fzf-default-opts no
 function _fzf_tab_resize() {
-    local width
+    # COLUMNS follows the pane size. Recompute only after a resize; no tmux fork
+    # is needed on the prompt path, including when several panes are open.
+    local dimensions="${COLUMNS:-80}:${LINES:-24}:${TMUX:+tmux}"
+    [[ ${_FZF_TAB_DIMENSIONS:-} == "$dimensions" ]] && return
+    _FZF_TAB_DIMENSIONS=$dimensions
+    local width=${COLUMNS:-80}
     local -a flags=('--preview-window=right:50%')
     if [[ -n "$TMUX" ]]; then
-        width=$(tmux display-message -p '#{window_width}')
         zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
     else
-        width=$COLUMNS
         zstyle ':fzf-tab:*' fzf-command fzf
         flags+=('--height=33%')
     fi
     zstyle ':fzf-tab:*' fzf-flags $flags
     local popup_width=$(( width * 3 / 4 ))
-    (( popup_width < 80 )) && popup_width=80
+    (( popup_width < 40 )) && popup_width=40
+    (( popup_width > width )) && popup_width=$width
     zstyle ':fzf-tab:*' popup-min-size $popup_width 15
 }
 _fzf_tab_resize
@@ -72,13 +85,5 @@ zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|
 	fzf-preview 'echo ${(P)word}'
 zstyle ':fzf-tab:complete:*:*' fzf-preview 'fzf-tab-preview $realpath'
 
-if [[ ! -z "$DEVPOD_NAME" ]]; then
-    # Install latest version on devpod
-    if [[ ! -f "$HOME/.fzf.zsh" ]]; then
-        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-        echo "y y n " | tr ' ' '\n' | ~/.fzf/install
-    fi
-    export FZF_PATH="$HOME/.fzf"
-    export PATH="$HOME/.fzf/bin:$PATH"
-    source "$HOME/.fzf.zsh"
-fi
+# Devpods use the same package installation and OMZ fzf integration as laptops.
+# Keep network installation out of shell startup; run `dotfiles install` first.
