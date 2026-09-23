@@ -121,6 +121,16 @@ if ! zgenom saved; then
   # executed every 7 days.
 fi
 
+# Prefer the package-managed git-extras. Keep older zgenom-only commands as a
+# fallback during migration rather than deleting binaries someone may still use.
+for _git_extras_bin in /opt/homebrew/opt/git-extras/bin /usr/local/opt/git-extras/bin; do
+  [[ ! -d "$_git_extras_bin" ]] || path=("$_git_extras_bin" $path)
+done
+if [[ -d "$ZGEN_SOURCE/bin" ]]; then
+  path=(${path:#"$ZGEN_SOURCE/bin"} "$ZGEN_SOURCE/bin")
+fi
+unset _git_extras_bin
+
 # Lazy load plugins which are not needed at startup
 # SDK and NVM — must be outside the save block to run every startup
 export SDKMAN_DIR="${SDKMAN_DIR:-$HOME/.sdkman}"
