@@ -6,9 +6,15 @@ emit_osc52() {
   printf '\033]52;c;%s\007' "$(base64 | tr -d '\r\n')"
 }
 case "${1:-}" in
-  --emit) emit_osc52; exit ;; # Test/render OSC 52 without touching the clipboard.
-  "") ;;
-  *) printf 'Usage: dotfiles-copy [--emit] < text\n' >&2; exit 2 ;;
+--emit)
+  emit_osc52
+  exit
+  ;; # Test/render OSC 52 without touching the clipboard.
+"") ;;
+*)
+  printf 'Usage: dotfiles-copy [--emit] < text\n' >&2
+  exit 2
+  ;;
 esac
 if [[ -n ${TMUX:-} ]]; then
   # Let tmux send the escape sequence to its attached client, preserving its buffer.
@@ -20,5 +26,5 @@ elif [[ -n ${WAYLAND_DISPLAY:-} ]] && command -v wl-copy >/dev/null; then
 elif [[ -n ${DISPLAY:-} ]] && command -v xclip >/dev/null; then
   xclip -selection clipboard
 else
-  emit_osc52 > /dev/tty
+  emit_osc52 >/dev/tty
 fi

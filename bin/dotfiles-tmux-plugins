@@ -5,7 +5,10 @@ dotfiles_root="${DOTFILES:-$HOME/.dotfiles}"
 plugin_dir="${TMUX_PLUGIN_MANAGER_PATH:-$HOME/.tmux/plugins/}"
 tmux_conf="${TMUX_CONF:-$HOME/.tmux.conf}"
 
-command -v tmux >/dev/null || { echo 'Install tmux first.' >&2; exit 1; }
+command -v tmux >/dev/null || {
+  echo 'Install tmux first.' >&2
+  exit 1
+}
 if [[ ! -x "$plugin_dir/tpm/bin/install_plugins" ]]; then
   git -C "$dotfiles_root" submodule update --init --recursive link/.tmux/plugins/tpm
 fi

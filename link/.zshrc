@@ -24,7 +24,9 @@ function src() {
 
 # Run dotfiles script, then source.
 function dotfiles() {
-  $DOTFILES/bin/dotfiles "$@" && src
+  "$DOTFILES/bin/dotfiles" "$@" || return
+  # Verification should not also change the calling shell's plugin state.
+  [[ "${1:-update}" == check ]] || src
 }
 
 # Skip compaudit security checks — compinit -u is safe on a personal machine
