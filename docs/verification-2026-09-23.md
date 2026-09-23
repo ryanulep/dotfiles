@@ -5,7 +5,7 @@ live tmux autoreloader could not load incomplete edits.
 
 ## Regression checks
 
-`scripts/check-config` passed all 21 behavioral tests, with no skips, on:
+`scripts/check-config` passed all 22 behavioral tests, with no skips, on:
 
 | Environment | tmux | fzf selected by the new PATH | Neovim |
 | --- | --- | --- | --- |
@@ -23,6 +23,8 @@ offline linking, preservation of provided Neovim, optional SDK loaders, initial
 TPM installation without a server, async prompt state/rendering, editor signs,
 resource warning colors, attached-client navigation, restored pane geometry,
 project session names, task arguments/failure codes, and iTerm profile generation.
+Migration checks also cover legacy commands after zgenom deletes its generated
+bin links and dynamic warning colors in the fully assembled status bar.
 
 Additional checks:
 

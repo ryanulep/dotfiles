@@ -160,6 +160,23 @@ source init/20_ubuntu_apt.sh
                           "NVM_DIR": "/nonexistent/dotfiles-nvm"})
         self.assertNotIn("UNEXPECTED", result.stdout)
 
+    def test_legacy_commands_survive_generated_bin_reset(self):
+        with tempfile.TemporaryDirectory(prefix="dotfiles-legacy-") as directory:
+            manager = Path(directory) / "manager"
+            sources = Path(directory) / "sources"
+            legacy = sources / "tj/git-extras/___/bin/git-existing-fixture"
+            legacy.parent.mkdir(parents=True)
+            legacy.write_text("#!/bin/sh\nprintf 'LEGACY_OK\\n'\n")
+            legacy.chmod(0o755)
+            source = (ROOT / "source/20_plugins.sh").read_text()
+            start = source.index("# Prefer the package-managed")
+            block = source[start:source.index("\n# Lazy load plugins", start)]
+            result = run("zsh", "-fc", block + "\ngit-existing-fixture", env={
+                "ZGEN_SOURCE": str(manager), "ZGEN_DIR": str(sources),
+            })
+            self.assertIn("LEGACY_OK", result.stdout)
+            self.assertFalse((manager / "bin").exists())
+
 
 class PromptTests(unittest.TestCase):
     def setUp(self):
@@ -303,11 +320,20 @@ class TmuxTests(unittest.TestCase):
         result = self.tmux("source-file", "-", input=config)
         self.assertNotIn("No such file", result.stdout + result.stderr)
         self.assertTrue(self.tmux("show-options", "-gqv", "@catppuccin_status_memory").stdout.strip())
-        colors = []
-        for reading in ["20.0%", "50.0%", "90.0%"]:
-            self.tmux("set-environment", "-g", "ram_percentage", reading)
-            colors.append(self.tmux("display-message", "-p", "#{E:@catppuccin_memory_color}").stdout.strip())
-        self.assertEqual(len(set(colors)), 3)
+        # Inspect the assembled status frame, not just the option: Catppuccin's
+        # E/F expansion can otherwise evaluate dynamic colors before metrics load.
+        frame = self.tmux("show-options", "-gqv", "status-right").stdout.strip()
+        frame = frame.replace("#{ram_percentage}", "#{@test_ram}").replace(
+            "#{cpu_percentage}", "#{@test_cpu}")
+        self.tmux("set-option", "-g", "status-right", frame)
+        for reading, color_option in [("20.0%", "@thm_green"), ("50.0%", "@thm_yellow"),
+                                      ("90.0%", "@thm_red")]:
+            self.tmux("set-option", "-g", "@test_ram", reading)
+            self.tmux("set-option", "-g", "@test_cpu", reading)
+            rendered = self.tmux("display-message", "-p", "#{E:status-right}").stdout
+            expected_color = self.tmux("show-options", "-gqv", color_option).stdout.strip()
+            self.assertIn(f"bg={expected_color}]", rendered)
+            self.assertNotIn("bg=]", rendered)
         self.assertNotIn("ram_bg_color", self.tmux("show-options", "-gqv", "status-right").stdout)
 
     def test_restored_layout_fills_window_without_losing_panes(self):
