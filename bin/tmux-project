@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+"""Attach/switch to a stable tmux session for a project or existing worktree."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import subprocess
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("directory", nargs="?")
+parser.add_argument("--list", action="store_true", help="list worktrees and recent directories")
+parser.add_argument("--print", action="store_true", help="show the resolved target without starting tmux")
+parser.add_argument("--detach", action="store_true", help="create/reuse the session without attaching")
+args = parser.parse_args()
+
+
+def output(argv):
+    result = subprocess.run(argv, capture_output=True)
+    return result.stdout if result.returncode == 0 else b""
+
+
+def project_root(directory):
+    root = output(["git", "-C", str(directory), "rev-parse", "--show-toplevel"]).rstrip(b"\n")
+    return Path(os.fsdecode(root)).resolve() if root else directory.resolve()
+
+
+candidates = [project_root(Path.cwd())]
+for record in output(["git", "worktree", "list", "--porcelain", "-z"]).split(b"\0"):
+    if record.startswith(b"worktree "):
+        candidates.append(Path(os.fsdecode(record[9:])))
+if shutil.which("zoxide"):
+    candidates.extend(Path(line) for line in os.fsdecode(output(["zoxide", "query", "--list"])).splitlines())
+candidates = list(dict.fromkeys(path for path in candidates if path.is_dir()))
+if args.list:
+    print("\n".join(map(str, candidates)))
+    raise SystemExit(0)
+if args.directory:
+    directory = Path(args.directory).expanduser()
+else:
+    if not shutil.which("fzf"):
+        parser.error("pass a directory or install fzf")
+    choice = subprocess.run(
+        ["fzf", "--read0", "--print0", "--prompt=Project/worktree> "],
+        input=b"\0".join(os.fsencode(path) for path in candidates), stdout=subprocess.PIPE,
+    )
+    if choice.returncode or not choice.stdout:
+        raise SystemExit(0)  # Cancelling never creates a session.
+    directory = Path(os.fsdecode(choice.stdout.rstrip(b"\0")))
+if not directory.is_dir():
+    parser.error(f"not a directory: {directory}")
+directory = project_root(directory)
+# The hash distinguishes same-named repositories/worktrees; ':' and '.' are
+# special in tmux targets and are excluded from the human-readable name.
+slug = re.sub(r"[^A-Za-z0-9_-]", "_", directory.name)[:40] or "project"
+session = slug + "-" + hashlib.sha256(os.fsencode(directory)).hexdigest()[:8]
+if args.print:
+    print(json.dumps({"session": session, "directory": str(directory)}))
+    raise SystemExit(0)
+target = "=" + session  # Exact matching avoids attaching to a prefix match.
+if subprocess.run(["tmux", "has-session", "-t", target], capture_output=True).returncode:
+    created = subprocess.run(["tmux", "new-session", "-d", "-s", session, "-c", str(directory)])
+    # Another terminal may have created the same session concurrently.
+    if created.returncode and subprocess.run(["tmux", "has-session", "-t", target]).returncode:
+        raise SystemExit(created.returncode)
+if args.detach:
+    print(session)
+else:
+    action = "switch-client" if os.environ.get("TMUX") else "attach-session"
+    os.execvp("tmux", ["tmux", action, "-t", target])
