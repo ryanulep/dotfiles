@@ -129,6 +129,11 @@ done
 if [[ -d "$ZGEN_SOURCE/bin" ]]; then
   path=(${path:#"$ZGEN_SOURCE/bin"} "$ZGEN_SOURCE/bin")
 fi
+# zgenom reset removes its generated bin symlinks. The original checkout's bin
+# survives, so keep it as the final fallback even immediately after a reset.
+if [[ -d "$ZGEN_DIR/tj/git-extras/___/bin" ]]; then
+  path+=("$ZGEN_DIR/tj/git-extras/___/bin")
+fi
 # Stop auto-loading the redundant formatter, but keep an already installed
 # diff-so-fancy available for explicit use while Git continues to use delta.
 if [[ -x "$ZGEN_DIR/so-fancy/diff-so-fancy/___/diff-so-fancy" ]]; then
