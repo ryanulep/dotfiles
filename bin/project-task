@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""Run explicit repository build/test tasks, optionally capturing quickfix output."""
+import argparse
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--list", action="store_true")
+parser.add_argument("--log", type=Path, help="tee combined output to a quickfix-compatible log")
+parser.add_argument("task", nargs="?")
+parser.add_argument("arguments", nargs=argparse.REMAINDER)
+args = parser.parse_args()
+# Look upwards so commands work from package subdirectories. Nothing executes
+# when changing directory: tasks run only after an explicit selection.
+config = next((parent / ".dotfiles-tasks.json"
+               for parent in [Path.cwd(), *Path.cwd().parents]
+               if (parent / ".dotfiles-tasks.json").is_file()), None)
+if config is None:
+    parser.error("no .dotfiles-tasks.json found; see README for the argv-array format")
+try:
+    tasks = json.loads(config.read_text())
+except (ValueError, OSError) as error:
+    parser.error(str(error))
+if not isinstance(tasks, dict) or not all(
+    isinstance(name, str) and "\n" not in name and isinstance(argv, list) and argv
+    and all(isinstance(arg, str) for arg in argv) for name, argv in tasks.items()
+):
+    parser.error("tasks must be a JSON object mapping names to nonempty command argument arrays")
+if args.list:
+    print("\n".join(tasks))
+    raise SystemExit(0)
+task = args.task
+if task is None:
+    if not shutil.which("fzf"):
+        parser.error("specify a task or install fzf")
+    choice = subprocess.run(["fzf", "--prompt=Task> "], input="\n".join(tasks),
+                            text=True, stdout=subprocess.PIPE)
+    if choice.returncode:
+        raise SystemExit(0)
+    task = choice.stdout.rstrip("\n")
+if task not in tasks:
+    parser.error(f"unknown task: {task}")
+extra = args.arguments[1:] if args.arguments[:1] == ["--"] else args.arguments
+command = tasks[task] + extra
+# Resolve a requested log relative to the caller before changing to project root.
+log = args.log.resolve() if args.log else None
+os.chdir(config.parent)
+if log is None:
+    os.execvp(command[0], command)
+with log.open("w") as stream:
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                               text=True, errors="replace")
+    for line in process.stdout:
+        sys.stdout.write(line)
+        stream.write(line)
+    raise SystemExit(process.wait())
