@@ -31,13 +31,7 @@ if ! zgenom saved; then
 
   zgenom ohmyzsh
 
-  # Setup eget to download core apps
-  test -d "$HOME/bin" || mkdir -p "$HOME/bin"
-  command -v eget > /dev/null 2>&1 || (bash "$DOTFILES/scripts/eget.sh" && mv $HOME/eget $HOME/bin/)
-
-  # Install core CLI tools using eget
-  command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
-  command -v bat > /dev/null 2>&1 || eget sharkdp/bat
+  # Core CLI installation belongs to `dotfiles install`, not shell startup.
 
   # Core Zsh plugins
   zgenom load jandamm/zgenom-ext-eval    # Quickly generate plugins from a command or heredoc.
@@ -70,11 +64,7 @@ if ! zgenom saved; then
   if (( $+commands[tig] )); then
     zgenom ohmyzsh plugins/tig
   fi
-  if (( $+commands[bat] )); then
-    # Use diff-so-fancy for better syntax highlighting and formatting
-    # Only works if bat is installed
-    zgenom load so-fancy/diff-so-fancy
-  fi
+  # Git uses delta. Keep one diff formatter and one package-managed git-extras.
 
   # File management / navigation
   zgenom load raisedadead/zsh-touchplus     # create files with touch including the path
@@ -118,8 +108,7 @@ if ! zgenom saved; then
     zgenom load nilsonholger/osx-zsh-completions
   fi
 
-  # Add binaries
-  zgenom bin tj/git-extras
+  # git-extras is installed by Homebrew/apt, avoiding competing binary versions.
 
   # save all to init script
   zgenom save

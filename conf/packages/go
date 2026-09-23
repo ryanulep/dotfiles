@@ -1,5 +1,7 @@
 go install github.com/bazelbuild/buildtools/buildifier@latest
 go install github.com/bazelbuild/buildtools/buildozer@latest
 go install github.com/bazelbuild/buildtools/unused_deps@latest
+go install github.com/bazelbuild/bazelisk@latest
+go install github.com/bazelbuild/bazel-watcher/cmd/ibazel@latest
 
 go install github.com/danielgatis/imgcat@latest
