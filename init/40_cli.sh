@@ -25,13 +25,26 @@ if ! command -v fzf >/dev/null || ! fzf --help | grep -q -- '--style'; then
 fi
 
 # Honor the existing Cargo manifest. Installed tools are left alone by install.
+# On Linux the distro compiler may be too old for current CLI releases, so use
+# static release binaries for these known tools and retain Cargo for other crates.
 while IFS= read -r crate || [[ -n "$crate" ]]; do
   [[ -z "$crate" || "$crate" == \#* ]] && continue
   binary=$crate
-  case "$crate" in git-delta) binary=delta ;; jj-cli) binary=jj ;; ripgrep) binary=rg ;; esac
+  case "$crate" in git-delta) binary="delta" ;; jj-cli) binary="jj" ;; ripgrep) binary="rg" ;; esac
   installed_binary=$(command -v "$binary" || true)
   if [[ -z "$installed_binary" || ( "$DOTFILES_ACTION" == upgrade && "$installed_binary" == "$HOME/.cargo/bin/"* ) ]]; then
-    cargo install --locked "$crate" || return
+    release=""
+    case "$crate" in
+      bat) release=sharkdp/bat ;;
+      git-delta) release=dandavison/delta ;;
+      jj-cli) release=jj-vcs/jj ;;
+      ripgrep) release=BurntSushi/ripgrep ;;
+    esac
+    if [[ "$OSTYPE" == linux* && -n "$release" ]]; then
+      ensure_eget && eget --to "$HOME/bin/$binary" --asset musl --asset .tar.gz --asset '^.sha256' "$release" || return
+    else
+      cargo install --locked "$crate" || return
+    fi
   fi
 done < "$DOTFILES/conf/packages/cargo"
 
