@@ -290,10 +290,15 @@ class TmuxTests(unittest.TestCase):
         self.assertEqual(self.tmux("show-options", "-gqv", "status-interval").stdout.strip(), "15")
 
     def test_installed_theme_modules_and_resource_colors(self):
-        theme = Path.home() / ".tmux/plugins/tmux/catppuccin.tmux"
-        if not theme.is_file():
+        candidates = [
+            ROOT / "link/.tmux/plugins/tmux/catppuccin.tmux",
+            Path.home() / ".tmux/plugins/tmux/catppuccin.tmux",
+        ]
+        theme = next((path for path in candidates if path.is_file()), None)
+        if theme is None:
             self.skipTest("Catppuccin tmux theme is not installed")
         config = (ROOT / "link/.tmux.conf").read_text().split("# Initialize TMUX plugin manager")[0]
+        config = config.replace('$HOME/.tmux/plugins/', str(theme.parent.parent) + "/")
         config = config.replace('$HOME/.tmux/custom_modules', str(ROOT / "link/.tmux/custom_modules"))
         result = self.tmux("source-file", "-", input=config)
         self.assertNotIn("No such file", result.stdout + result.stderr)
