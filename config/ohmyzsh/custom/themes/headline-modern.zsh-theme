@@ -186,7 +186,7 @@ HL_PROMPT='%(#.#.%(!.!.>)) ' # consider '%#'
 # HL_PROMPT='%B%(#.#.%(!.!.$))%b ' # Bold prompt
 
 # Right prompt
-HL_RPROMPT='${_HL_GIT_BRANCH:+%F{cyan} ${_HL_GIT_BRANCH}%f}${_HL_GIT_STATUS:+ [%F{magenta}${_HL_GIT_STATUS}%f]}'
+HL_RPROMPT='${_HL_GIT_PROMPT}'
 
 
 # Show the clock, or don't show
