@@ -9,17 +9,17 @@ function jobsf() {
 }
 
 function b() {
-	local bookmarks_path="${CHROME_BOOKMARKS_FILE:-$HOME/Library/Application Support/Google/Chrome/Default/Bookmarks}"
-	local jq_script='def ancestors: while(. | length >= 2; del(.[-1,-2])); . as $in | paths(.url?) as $key | $in | getpath($key) | {name,url, path: [$key[0:-2] | ancestors as $a | $in | getpath($a) | .name?] | reverse | join("/") } | [(.path + "/" + .name | gsub("[\\t\\n]"; " ")), .url] | join("\t")'
-	local choice
-	# A tab is a real field delimiter; `cut -d '  '` fails on macOS. Keep URLs
-	# quoted rather than handing spaces, percent signs, or '&' through xargs.
-	choice=$(jq -r "$jq_script" <"$bookmarks_path" | fzf --delimiter=$'\t' --with-nth=1) || return
-	[[ -n "$choice" ]] && open "${choice##*$'\t'}"
+	local bookmarks_path=~/Library/Application\ Support/Google/Chrome/Default/Bookmarks
+	local jq_script='def ancestors: while(. | length >= 2; del(.[-1,-2])); . as $in | paths(.url?) as $key | $in | getpath($key) | {name,url, path: [$key[0:-2] | ancestors as $a | $in | getpath($a) | .name?] | reverse | join("/") } | .path + "/" + .name + "  " + .url'
+	jq -r $jq_script <"$bookmarks_path" |
+		sed -E $'s/(.*)  (.*)/\\1  \x1b[36m\\2\x1b[m/g' |
+		fzf --ansi |
+		cut -d$'  ' -f2 |
+		xargs open
 }
 
 function emoj() {
-	emoji-fzf preview | fzf --preview 'emoji-fzf get --name {1}' | cut -d " " -f 1 | emoji-fzf get | dotfiles-copy
+	emoji-fzf preview | fzf --preview 'emoji-fzf get --name {1}' | cut -d " " -f 1 | emoji-fzf get | pbcopy
 }
 
 function ghstars() {

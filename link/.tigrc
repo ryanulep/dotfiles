@@ -1,10 +1,1 @@
 color cursor        default white bold
-# Keep the default keyboard shortcuts; specialize the views for investigation.
-# Lazygit handles staging/conflicts, while tig is useful for history and blame.
-set main-view-date = custom
-set main-view-date-format = "%Y-%m-%d"
-set main-view-commit-title-graph = yes
-set blame-view-line-number = yes
-set horizontal-scroll = 33%
-# Keep normal terminal text selection. Existing tmux mouse behavior is unchanged.
-set mouse = false

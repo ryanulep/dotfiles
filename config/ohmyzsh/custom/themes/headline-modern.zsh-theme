@@ -84,7 +84,7 @@ HL_LAYOUT_STYLE="%{$faint%}"
 
 # Order of segments
 declare -a HL_LAYOUT_ORDER=(
-  _PRE USER HOST VENV PATH _POST
+  _PRE USER HOST VENV PATH _SPACER BRANCH STATUS _POST # ...
 )
 
 # Template for each segment's layout
@@ -124,7 +124,7 @@ declare -A HL_CONTENT_TEMPLATE=(
 # Commands to produce each segment's content
 declare -A HL_CONTENT_SOURCE=(
   USER   'echo $USER'
-  HOST   'print -r -- ${HOST%%.*}'
+  HOST   'hostname -s'
   VENV   'basename "$VIRTUAL_ENV"'
   PATH   'print -rP "%~"'
   BRANCH 'headline-git-branch'
@@ -186,7 +186,7 @@ HL_PROMPT='%(#.#.%(!.!.>)) ' # consider '%#'
 # HL_PROMPT='%B%(#.#.%(!.!.$))%b ' # Bold prompt
 
 # Right prompt
-HL_RPROMPT='${_HL_GIT_PROMPT}'
+HL_RPROMPT=''
 
 
 # Show the clock, or don't show
@@ -305,8 +305,115 @@ headline-exit-meaning() { # (num)
   esac
 }
 
-# Git queries run outside the interactive shell and refresh only RPROMPT.
-source "${${(%):-%N}:A:h}/headline-git.zsh"
+# Git command wrapper
+headline-git() {
+  # TODO is this necessary?
+  GIT_OPTIONAL_LOCKS=0 command git "$@"
+}
+
+# Get git branch (or hash)
+headline-git-branch() {
+  local ref
+  ref=$(headline-git symbolic-ref --quiet HEAD 2> /dev/null)
+  local err=$?
+  if [[ $err == 0 ]]; then
+    echo ${ref#refs/heads/} # remove "refs/heads/" to get branch
+  else # not on a branch
+    [[ $err == 128 ]] && return  # not a git repo
+    ref=$(headline-git rev-parse --short HEAD 2> /dev/null) || return
+    echo ":${ref}" # hash prefixed to distingush from branch
+  fi
+}
+
+# Get the quantity of each git status
+headline-git-status-counts() {
+  local -A counts=(
+    'STAGED' 0 # staged changes
+    'CHANGED' 0 # unstaged changes
+    'UNTRACKED' 0 # untracked files
+    'BEHIND' 0 # commits behind
+    'AHEAD' 0 # commits ahead
+    'DIVERGED' 0 # commits diverged
+    'STASHED' 0 # stashed files
+    'CONFLICTS' 0 # conflicted files
+    'CLEAN' 1 # clean branch 1=true 0=false
+  )
+
+  # Retrieve status
+  local raw lines
+  raw="$(headline-git status --porcelain -b 2> /dev/null)"
+  if [[ $? == 128 ]]; then
+    return 1 # catastrophic failure, abort
+  fi
+  lines=(${(@f)raw})
+
+  # Process tracking line
+  if [[ ${lines[1]} =~ '^## [^ ]+ \[(.*)\]' ]]; then
+    local items=("${(@s/,/)match}")
+    for item in $items; do
+      if [[ $item =~ '(behind|ahead|diverged) ([0-9]+)?' ]]; then
+        case $match[1] in
+          'behind') counts[BEHIND]=$match[2];;
+          'ahead') counts[AHEAD]=$match[2];;
+          'diverged') counts[DIVERGED]=$match[2];;
+        esac
+      fi
+    done
+  fi
+
+  # Process status lines
+  for line in $lines; do
+    if [[ $line =~ '^##|^!!' ]]; then
+      continue
+    elif [[ $line =~ '^U[ADU]|^[AD]U|^AA|^DD' ]]; then
+      counts[CONFLICTS]=$(( ${counts[CONFLICTS]} + 1 ))
+    elif [[ $line =~ '^\?\?' ]]; then
+      counts[UNTRACKED]=$(( ${counts[UNTRACKED]} + 1 ))
+    elif [[ $line =~ '^[MTADRC] ' ]]; then
+      counts[STAGED]=$(( ${counts[STAGED]} + 1 ))
+    elif [[ $line =~ '^[MTARC][MTD]' ]]; then
+      counts[STAGED]=$(( ${counts[STAGED]} + 1 ))
+      counts[CHANGED]=$(( ${counts[CHANGED]} + 1 ))
+    elif [[ $line =~ '^ [MTADRC]' ]]; then
+      counts[CHANGED]=$(( ${counts[CHANGED]} + 1 ))
+    fi
+  done
+
+  # Check for stashes
+  if $(headline-git rev-parse --verify refs/stash &> /dev/null); then
+    counts[STASHED]=$(headline-git rev-list --walk-reflogs --count refs/stash 2> /dev/null)
+  fi
+
+  # Update clean flag
+  for key val in ${(@kv)counts}; do
+    [[ $key == 'CLEAN' ]] && continue
+    (( $val > 0 )) && counts[CLEAN]=0
+  done
+
+  echo ${(@kv)counts} # key1 val1 key2 val2 ...
+}
+
+# Get git status
+headline-git-status() {
+  local parts=( ${(ps:$HL_TEMPLATE_TOKEN:)HL_CONTENT_TEMPLATE[STATUS]} ) # split on template token
+  local style=${${parts[1]##*%\{}%%%\}*} # regex for "%{...%}"
+  local -A counts=( $(headline-git-status-counts) )
+  (( ${#counts} == 0 )) && return # not a git repo
+  local result=''
+  for key in $HL_GIT_STATUS_ORDER; do
+    if (( ${counts[$key]} > 0 )); then
+      if (( ${#HL_GIT_SEP_SYMBOL} != 0 && ${#result} != 0 )); then
+        result+="%{$reset%}$HL_BASE_STYLE$HL_LAYOUT_STYLE$HL_GIT_SEP_SYMBOL%{$reset%}$HL_BASE_STYLE%{$style%}"
+      fi
+      if [[ $key != 'CLEAN' && $HL_GIT_COUNT_MODE == 'on' || ( $HL_GIT_COUNT_MODE == 'auto' && ${counts[$key]} != 1 ) ]]; then
+        result+="${counts[$key]}${HL_GIT_STATUS_SYMBOLS[$key]}"
+      else
+        result+="${HL_GIT_STATUS_SYMBOLS[$key]}"
+      fi
+    fi
+  done
+  echo $result
+}
 
 # Transfer styles to another string
 headline-transfer-styles() { # (str, str)

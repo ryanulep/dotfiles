@@ -1,5 +1,7 @@
-# Theme selection is exported by source/61_envrc.sh. Keeping platform-specific
-# flags out of this file also supports the older bat shipped on Linux devpods.
+# Set the theme based on terminal colors
+--theme="auto:system"
+--theme-light="Catppuccin Latte"
+--theme-dark="Catppuccin Mocha"
 
 # Show line numbers, Git modifications and file header (but no grid)
 --style="numbers,changes,header"

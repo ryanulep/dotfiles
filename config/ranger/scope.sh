@@ -292,9 +292,7 @@ handle_mime() {
         ## Text
         text/* | */xml)
             ## Syntax highlight
-            # GNU stat uses -c; BSD/macOS stat uses -f. Check before highlighting.
-            file_size=$(stat -c '%s' -- "${FILE_PATH}" 2>/dev/null || stat -f '%z' "${FILE_PATH}")
-            if [[ "$file_size" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
+            if [[ "$( stat --printf='%s' -- "${FILE_PATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
                 exit 2
             fi
             if [[ "$( tput colors )" -ge 256 ]]; then
@@ -304,12 +302,11 @@ handle_mime() {
                 local pygmentize_format='terminal'
                 local highlight_format='ansi'
             fi
-            # Prefer bat for the shared theme; keep highlight/pygmentize fallbacks.
-            bat --color=always --paging=never --line-range=:200 --style="numbers" \
-                -- "${FILE_PATH}" && exit 5
             env HIGHLIGHT_OPTIONS="${HIGHLIGHT_OPTIONS}" highlight \
                 --out-format="${highlight_format}" \
                 --force -- "${FILE_PATH}" && exit 5
+            env COLORTERM=8bit bat --color=always --style="numbers" \
+                -- "${FILE_PATH}" && exit 5
             pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}"\
                 -- "${FILE_PATH}" && exit 5
             exit 2;;

@@ -4,14 +4,6 @@ source "${HOME}/.zgenom/zgenom.zsh"
 # This prevents the double-compinit that costs ~200ms on every startup.
 ZGEN_AUTOLOAD_COMPINIT=0
 
-# Rebuild the saved plugin list when this file changes. Runtime settings below
-# must still run on cached starts: zgenom save records source files, not zstyles.
-ZGEN_RESET_ON_CHANGE=("$DOTFILES/source/20_plugins.sh")
-zstyle ':omz:plugins:alias-finder' autoload yes
-zstyle ':omz:plugins:alias-finder' longer yes
-zstyle ':omz:plugins:alias-finder' exact yes
-zstyle ':omz:plugins:alias-finder' cheaper yes
-
 ## Pre-work before loading plugins
 
 ZSH_WEB_SEARCH_ENGINES=(
@@ -31,7 +23,13 @@ if ! zgenom saved; then
 
   zgenom ohmyzsh
 
-  # Core CLI installation belongs to `dotfiles install`, not shell startup.
+  # Setup eget to download core apps
+  test -d "$HOME/bin" || mkdir -p "$HOME/bin"
+  command -v eget > /dev/null 2>&1 || (bash "$DOTFILES/scripts/eget.sh" && mv $HOME/eget $HOME/bin/)
+
+  # Install core CLI tools using eget
+  command -v zoxide > /dev/null 2>&1 || eget ajeetdsouza/zoxide
+  command -v bat > /dev/null 2>&1 || eget sharkdp/bat
 
   # Core Zsh plugins
   zgenom load jandamm/zgenom-ext-eval    # Quickly generate plugins from a command or heredoc.
@@ -64,7 +62,11 @@ if ! zgenom saved; then
   if (( $+commands[tig] )); then
     zgenom ohmyzsh plugins/tig
   fi
-  # Git uses delta. Keep one diff formatter and one package-managed git-extras.
+  if (( $+commands[bat] )); then
+    # Use diff-so-fancy for better syntax highlighting and formatting
+    # Only works if bat is installed
+    zgenom load so-fancy/diff-so-fancy
+  fi
 
   # File management / navigation
   zgenom load raisedadead/zsh-touchplus     # create files with touch including the path
@@ -76,6 +78,10 @@ if ! zgenom saved; then
   # Aliases
   zgenom ohmyzsh plugins/common-aliases    # Creates helpful shortcut aliases for many commonly used commands
   zgenom ohmyzsh plugins/alias-finder    # Creates helpful shortcut aliases for many commonly used commands
+  zstyle ':omz:plugins:alias-finder' autoload yes
+  zstyle ':omz:plugins:alias-finder' longer yes
+  zstyle ':omz:plugins:alias-finder' exact yes
+  zstyle ':omz:plugins:alias-finder' cheaper yes
   zgenom load brymck/print-alias    # Prints commands with aliases expanded on the CLI
 
   # Shell enhancements
@@ -108,7 +114,8 @@ if ! zgenom saved; then
     zgenom load nilsonholger/osx-zsh-completions
   fi
 
-  # git-extras is installed by Homebrew/apt, avoiding competing binary versions.
+  # Add binaries
+  zgenom bin tj/git-extras
 
   # save all to init script
   zgenom save
@@ -121,33 +128,7 @@ if ! zgenom saved; then
   # executed every 7 days.
 fi
 
-# Prefer the package-managed git-extras. Keep older zgenom-only commands as a
-# fallback during migration rather than deleting binaries someone may still use.
-for _git_extras_bin in /opt/homebrew/opt/git-extras/bin /usr/local/opt/git-extras/bin; do
-  [[ ! -d "$_git_extras_bin" ]] || path=("$_git_extras_bin" $path)
-done
-if [[ -d "$ZGEN_SOURCE/bin" ]]; then
-  path=(${path:#"$ZGEN_SOURCE/bin"} "$ZGEN_SOURCE/bin")
-fi
-# zgenom reset removes its generated bin symlinks. The original checkout's bin
-# survives, so keep it as the final fallback even immediately after a reset.
-if [[ -d "$ZGEN_DIR/tj/git-extras/___/bin" ]]; then
-  path+=("$ZGEN_DIR/tj/git-extras/___/bin")
-fi
-# Stop auto-loading the redundant formatter, but keep an already installed
-# diff-so-fancy available for explicit use while Git continues to use delta.
-if [[ -x "$ZGEN_DIR/so-fancy/diff-so-fancy/___/diff-so-fancy" ]]; then
-  path+=("$ZGEN_DIR/so-fancy/diff-so-fancy/___")
-fi
-unset _git_extras_bin
-
 # Lazy load plugins which are not needed at startup
 # SDK and NVM — must be outside the save block to run every startup
-export SDKMAN_DIR="${SDKMAN_DIR:-$HOME/.sdkman}"
-if [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]]; then
-  lazyload sdk -- 'source "$SDKMAN_DIR/bin/sdkman-init.sh"'
-fi
-export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
-if [[ -s "$NVM_DIR/nvm.sh" ]]; then
-  lazyload nvm npm node -- 'source "$NVM_DIR/nvm.sh"'
-fi
+lazyload sdk -- 'export SDKMAN_DIR="$HOME/.sdkman" && source "$HOME/.sdkman/bin/sdkman-init.sh"'
+lazyload nvm npm node -- 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'

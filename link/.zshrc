@@ -1,4 +1,4 @@
-export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+export DOTFILES="$HOME/.dotfiles"
 export ZSH_CUSTOM=$DOTFILES/config/ohmyzsh/custom
 
 # Enable Oh My Zsh auto-update
@@ -24,9 +24,7 @@ function src() {
 
 # Run dotfiles script, then source.
 function dotfiles() {
-  "$DOTFILES/bin/dotfiles" "$@" || return
-  # Verification should not also change the calling shell's plugin state.
-  [[ "${1:-update}" == check ]] || src
+  $DOTFILES/bin/dotfiles "$@" && src
 }
 
 # Skip compaudit security checks — compinit -u is safe on a personal machine

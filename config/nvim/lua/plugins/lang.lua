@@ -1,6 +1,5 @@
 -- Language support beyond what LazyVim extras cover.
--- Extras (java, kotlin, typescript, markdown, yaml, json, git) are imported in lazy.lua.
--- Go stays Treesitter-only; language servers are intentionally not enabled.
+-- Extras (go, java, kotlin, typescript, markdown, yaml, json, git) are imported in lazy.lua.
 
 return {
   {
@@ -34,8 +33,6 @@ return {
       },
       -- Configured here rather than options.lua so it runs after LazyVim's own
       -- diagnostic setup and isn't overwritten
-      -- Inlay hints are independent of diagnostic virtual_text/virtual_lines.
-      inlay_hints = { enabled = false },
       diagnostics = {
         virtual_text = false,
         signs = true,
