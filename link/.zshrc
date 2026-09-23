@@ -1,4 +1,4 @@
-export DOTFILES="$HOME/.dotfiles"
+export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 export ZSH_CUSTOM=$DOTFILES/config/ohmyzsh/custom
 
 # Enable Oh My Zsh auto-update

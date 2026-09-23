@@ -3,14 +3,21 @@ is_osx || return 1
 
 if [[ ! "$(type -P brew)" ]]; then
   e_header "Installing Homebrew"
-  true | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || return
+  # A fresh Apple Silicon installation is not on PATH in this process yet.
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
 fi
 
 [[ ! "$(type -P brew)" ]] && e_error "Homebrew failed to install." && return 1
 
-e_header "Updating Homebrew"
-brew doctor
-brew update
+if [[ "$DOTFILES_ACTION" == upgrade ]]; then
+  e_header "Updating Homebrew"
+  brew update || return
+fi
 
 ## The functions below are used in subsequent init scripts.
 # Tap Homebrew kegs.
