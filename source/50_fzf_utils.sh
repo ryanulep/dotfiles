@@ -19,7 +19,7 @@ function b() {
 }
 
 function emoj() {
-	emoji-fzf preview | fzf --preview 'emoji-fzf get --name {1}' | cut -d " " -f 1 | emoji-fzf get | pbcopy
+	emoji-fzf preview | fzf --preview 'emoji-fzf get --name {1}' | cut -d " " -f 1 | emoji-fzf get | dotfiles-copy
 }
 
 function ghstars() {

@@ -39,14 +39,14 @@ if (( $+commands[code] )); then
   # Opening an editor only makes sense for file selections, not history/sessions.
   FZF_CTRL_T_OPTS+=" --bind 'ctrl-o:execute(code -- {})+abort'"
 fi
-# CTRL-Y to copy the command into clipboard using pbcopy
+# CTRL-Y copies locally or via OSC 52/tmux when connected to a devpod.
 export FZF_CTRL_R_OPTS='
   --tmux 90%
   --height 60%
   --style full
   --multi
   --header-label ""
-  --bind "ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort"
+  --bind "ctrl-y:execute-silent(printf %s {2..} | dotfiles-copy)+abort"
   --color header:italic
   --header "Press CTRL-Y to copy the command into the clipboard"'
 
