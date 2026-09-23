@@ -1,5 +1,4 @@
 [include]
-    path = ~/.gitconfig.local
     path = ~/.delta/themes.gitconfig
 
 [pull]
@@ -61,3 +60,7 @@
 
 [interactive]
     diffFilter = delta --color-only
+
+# Machine-specific identity, signing, and scalar overrides take precedence.
+[include]
+    path = ~/.gitconfig.local

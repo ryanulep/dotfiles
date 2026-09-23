@@ -1,8 +1,9 @@
 *.local
 vim/bundle/*
 backups/
-.DS_STORE
+.DS_Store
 link/.tmux/plugins/*
 config/jj/repos/
 **/__pycache__/
 **/*.pyc
+caches/
