@@ -129,6 +129,11 @@ done
 if [[ -d "$ZGEN_SOURCE/bin" ]]; then
   path=(${path:#"$ZGEN_SOURCE/bin"} "$ZGEN_SOURCE/bin")
 fi
+# Stop auto-loading the redundant formatter, but keep an already installed
+# diff-so-fancy available for explicit use while Git continues to use delta.
+if [[ -x "$ZGEN_DIR/so-fancy/diff-so-fancy/___/diff-so-fancy" ]]; then
+  path+=("$ZGEN_DIR/so-fancy/diff-so-fancy/___")
+fi
 unset _git_extras_bin
 
 # Lazy load plugins which are not needed at startup
