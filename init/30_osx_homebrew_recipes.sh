@@ -5,7 +5,8 @@ is_osx || return 1
 
 # Installing missing tools should not upgrade every existing application.
 if [[ "$DOTFILES_ACTION" == upgrade ]]; then
-  brew bundle install --file="$DOTFILES/conf/packages/Brewfile"
+  HOMEBREW_NO_INSTALL_CLEANUP=1 brew bundle install --file="$DOTFILES/conf/packages/Brewfile"
 else
-  brew bundle install --no-upgrade --file="$DOTFILES/conf/packages/Brewfile"
+  HOMEBREW_NO_INSTALL_CLEANUP=1 brew bundle install --no-upgrade --file="$DOTFILES/conf/packages/Brewfile"
 fi
+# Keep cleanup explicit: removing old keg versions can break pinned environments.
