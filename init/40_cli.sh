@@ -1,5 +1,5 @@
 # Shared CLI tools, installed explicitly and only when missing.
-export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/go/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.fzf/bin:$HOME/.cargo/bin:$HOME/go/bin:$PATH"
 mkdir -p "$HOME/bin"
 
 ensure_eget() {
